@@ -1,0 +1,307 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Noto Sans KR', Arial, sans-serif;
+  padding: 20px;
+  background: #eaf3ff;
+  text-align: center;
+}
+h1{ color:#1e40af }
+button{
+  background:#2563eb; color:white; border:0; padding:10px 18px; border-radius:10px;
+}
+button:hover{ filter:brightness(.95) }</style></head>
+<body><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>치수쌤 바이브코딩 갤러리</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F8FAFC;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 로딩 애니메이션 커스텀 */
+        .spinner {
+            border: 3px solid rgba(99, 102, 241, 0.1);
+            border-top: 3px solid #6366f1;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 부드러운 전환 효과 */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+    </style>
+</head>
+<body class="text-slate-900 selection:bg-indigo-100">
+
+    <!-- 1. Header & About Me Section -->
+    <header class="max-w-6xl mx-auto pt-12 md:pt-20 pb-12 px-6">
+        <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center">
+            
+            <!-- Profile Card -->
+            <div class="flex flex-col items-center text-center space-y-4 min-w-[240px]">
+                <div class="relative">
+                    <div class="w-40 h-40 rounded-full bg-[#EEF2FF] p-1 border border-indigo-100 shadow-inner flex items-center justify-center overflow-hidden">
+                        <span class="text-6xl">✨</span>
+                    </div>
+                    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white px-4 py-1 rounded-full shadow-md border border-slate-100">
+                        <p class="text-xs font-black text-indigo-600 whitespace-nowrap tracking-tight uppercase">Dreaming Teacher</p>
+                    </div>
+                </div>
+                
+                <div class="pt-2">
+                    <h2 class="text-3xl font-black text-slate-800">원치수</h2>
+                    <p class="text-sm font-bold text-indigo-500 mt-1 uppercase tracking-widest">Education Musical Creator</p>
+                </div>
+                
+                <p class="text-sm text-slate-500 font-medium leading-relaxed max-w-[200px]">
+                    교육과 뮤지컬, 디지털의 의미 있는 만남을 꿈꾸며 고민하고 실천합니다.
+                </p>
+            </div>
+
+            <!-- About Me Content -->
+            <div class="flex-1 space-y-8">
+                <div>
+                    <h1 class="text-4xl font-black text-slate-900 mb-6 tracking-tight">About Me</h1>
+                    <p class="text-[1.1rem] text-slate-600 leading-relaxed font-medium">
+                        교육뮤지컬을 고민하고, 창작하고, 실천합니다. 초등학생들과 함께 꿈꾸는 교육뮤지컬 이야기를 기록합니다. 따뜻한 디지털 활용 교육에도 관심이 많습니다.
+                    </p>
+                </div>
+                
+                <div class="relative pl-6 py-1">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-full"></div>
+                    <p class="text-xl text-slate-800 italic font-bold tracking-tight">
+                        "교육과 뮤지컬, 디지털의 의미 있는 만남을 꿈꾸다."
+                    </p>
+                </div>
+                
+                <div class="space-y-4">
+                    <h3 class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <i data-lucide="book-open" class="w-4 h-4 text-indigo-400"></i>
+                        Main Books
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-5 py-2 bg-slate-50 border border-slate-200 rounded-full text-slate-700 text-sm font-bold hover:bg-white hover:border-indigo-300 transition-all cursor-default shadow-sm">『세상에서 가장 쉬운 뮤지컬 수업』</span>
+                        <span class="px-5 py-2 bg-slate-50 border border-slate-200 rounded-full text-slate-700 text-sm font-bold hover:bg-white hover:border-indigo-300 transition-all cursor-default shadow-sm">『뮤지컬 창작노트』</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Gallery Section -->
+    <main class="max-w-6xl mx-auto px-6 pb-32">
+        
+        <!-- Navigation & Title -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <h2 class="text-3xl font-black text-slate-900 mb-2">Vibe Coding Gallery</h2>
+                <p class="text-slate-500 font-medium">치수쌤의 창작 프로젝트를 만나보세요.</p>
+            </div>
+            
+            <div id="category-filters" class="flex flex-wrap gap-2">
+                <!-- 카테고리 버튼이 여기에 생성됩니다 -->
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="flex flex-col items-center justify-center py-32 space-y-4">
+            <div class="spinner"></div>
+            <p class="text-slate-400 font-bold tracking-widest animate-pulse">데이터를 연결하는 중...</p>
+        </div>
+
+        <!-- Error State (Hidden by default) -->
+        <div id="error" class="hidden bg-red-50 border border-red-100 p-8 rounded-3xl text-center shadow-sm">
+            <p class="text-red-600 font-bold" id="error-message">오류가 발생했습니다.</p>
+            <p class="text-red-400 text-sm mt-2 font-medium">네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.</p>
+        </div>
+
+        <!-- Project Grid -->
+        <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 카드가 여기에 생성됩니다 -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="empty" class="hidden text-center py-32 bg-white rounded-[3rem] border border-dashed border-slate-200">
+            <p class="text-slate-400 font-bold">해당 카테고리에 프로젝트가 아직 없습니다.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-100 bg-white">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-slate-400 font-bold text-xs uppercase tracking-widest">
+                © <span id="year"></span> 꿈꾸는 치수쌤 · Vibe Coding Gallery
+            </p>
+            <div class="flex gap-6">
+                <span class="text-slate-300 text-[10px] font-bold italic uppercase tracking-tighter">Design Thinking · Education Musical · Creative Coding</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 설정 영역 ---
+        // 선생님께서 생성하신 구글 앱스 스크립트 웹 앱 URL입니다.
+        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzA0E-1Et4XYf7FUUMbytXsM7nlfgStWb7mSaS-66zhmNFfrupxbZV02I7-y8VUwR1P/exec";
+        const CATEGORIES = ['전체', '뮤지컬', '인터랙티브 시각디자인', '인문·창작', '디지털·세계시민교육', '수업디자인'];
+        
+        let allProjects = [];
+        let currentCategory = '전체';
+
+        // --- 초기화 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            renderFilters();
+            fetchData();
+            lucide.createIcons();
+        });
+
+        // --- 데이터 가져오기 (실시간 연동) ---
+        async function fetchData() {
+            try {
+                const response = await fetch(SHEET_API_URL);
+                if (!response.ok) throw new Error('네트워크 응답이 올바르지 않습니다.');
+                const data = await response.json();
+                
+                // 스프레드시트의 필드명(이름, 소개, 분류, URL, 개발년도)에 맞춰 매핑합니다.
+                allProjects = data.map((item, index) => ({
+                    id: index,
+                    title: item.이름 || '제목 없음',
+                    desc: item.소개 || '설명이 없습니다.',
+                    category: item.분류 || '기타',
+                    link: item.URL || '#',
+                    year: item.개발년도 || ''
+                }));
+
+                renderProjects();
+                document.getElementById('loading').classList.add('hidden');
+            } catch (err) {
+                console.error("데이터 로드 실패:", err);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.remove('hidden');
+            }
+        }
+
+        // --- 카테고리 필터 버튼 렌더링 ---
+        function renderFilters() {
+            const container = document.getElementById('category-filters');
+            container.innerHTML = CATEGORIES.map(cat => `
+                <button onclick="setCategory('${cat}')" 
+                        class="filter-btn px-4 py-2 rounded-xl text-sm font-bold transition-all border ${
+                            currentCategory === cat 
+                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg' 
+                            : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+                        }">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            renderFilters();
+            renderProjects();
+        }
+
+        // --- 프로젝트 카드 그리드 렌더링 ---
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            const empty = document.getElementById('empty');
+            
+            const filtered = currentCategory === '전체' 
+                ? allProjects 
+                : allProjects.filter(p => p.category === currentCategory);
+
+            if (filtered.length === 0 && allProjects.length > 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            
+            empty.classList.add('hidden');
+            grid.innerHTML = filtered.map(p => {
+                const style = getCategoryStyle(p.category);
+                return `
+                    <div class="card-hover group bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm transition-all duration-500 flex flex-col h-full transform">
+                        <div class="flex justify-between items-start mb-8">
+                            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[0.7rem] font-black uppercase tracking-wider border ${style.color}">
+                                <i data-lucide="${style.icon}" class="w-3.5 h-3.5"></i>
+                                ${p.category}
+                            </span>
+                            ${p.year ? `<span class="text-[0.7rem] font-bold text-slate-300 tracking-tighter">${p.year}</span>` : ''}
+                        </div>
+
+                        <div class="flex-grow space-y-4">
+                            <h3 class="text-2xl font-black text-slate-800 leading-tight group-hover:text-indigo-600 transition-colors">
+                                ${p.title}
+                            </h3>
+                            <p class="text-slate-500 text-[0.95rem] leading-relaxed font-medium line-clamp-3">
+                                ${p.desc}
+                            </p>
+                        </div>
+
+                        <div class="mt-10 pt-6 border-t border-slate-50">
+                            <a href="${p.link}" target="_blank" rel="noopener noreferrer" class="group/link inline-flex items-center justify-between w-full p-4 rounded-2xl bg-slate-50 hover:bg-indigo-600 transition-all duration-300">
+                                <span class="text-sm font-black text-slate-600 group-hover/link:text-white transition-colors">프로젝트 보기</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover/link:text-white transition-all transform group-hover/link:translate-x-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // 새로 생성된 HTML 요소들에 대해 아이콘을 초기화합니다.
+            lucide.createIcons();
+        }
+
+        // 카테고리별 디자인 스타일 정의
+        function getCategoryStyle(category) {
+            switch (category) {
+                case '뮤지컬': return { icon: 'music', color: 'bg-pink-50 text-pink-600 border-pink-100' };
+                case '인터랙티브 시각디자인': return { icon: 'monitor-play', color: 'bg-purple-50 text-purple-600 border-purple-100' };
+                case '인문·창작': return { icon: 'book-open', color: 'bg-green-50 text-green-600 border-green-100' };
+                case '디지털·세계시민교육': return { icon: 'globe-2', color: 'bg-blue-50 text-blue-600 border-blue-100' };
+                case '수업디자인': return { icon: 'layout', color: 'bg-orange-50 text-orange-600 border-orange-100' };
+                default: return { icon: 'sparkles', color: 'bg-slate-50 text-slate-600 border-slate-100' };
+            }
+        }
+    </script>
+</body>
+</html><script>function showAlert(){
+  const box = document.createElement('div');
+  box.textContent = '버튼이 클릭되었습니다! ' + new Date().toLocaleTimeString();
+  box.style.cssText = 'margin-top:20px;padding:12px;border:1px solid #93c5fd;background:#dbeafe;border-radius:10px;color:#1e40af';
+  document.body.appendChild(box);
+}
+console.log('콘솔 테스트: 정상 동작');</script></body></html>
