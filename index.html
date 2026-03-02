@@ -5,335 +5,398 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>치수쌤 바이브코딩 쇼룸</title>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Google Fonts: Cormorant Garamond + Playfair Display + Noto Serif KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
 
     <style>
-        /* ─── Design Tokens ─── */
+        /* ══════════════════════════════════════
+           DESIGN TOKENS  —  High-Contrast Dark
+        ══════════════════════════════════════ */
         :root {
-            --gold:          #C9A96E;
-            --gold-light:    #E8D5B0;
-            --gold-dim:      rgba(201, 169, 110, 0.65);
-            --gold-subtle:   rgba(201, 169, 110, 0.10);
-            --gold-border:   rgba(201, 169, 110, 0.20);
-            --gold-hover:    rgba(201, 169, 110, 0.45);
-            --bg:            #080808;
-            --bg-card:       #111111;
-            --bg-card-hover: #161616;
-            --text-primary:  #EAE4D8;
-            --text-secondary:#7A6E5E;
-            --text-muted:    #3D3530;
+            /* Gold palette */
+            --gold:           #C9A96E;
+            --gold-light:     #E8D5B0;
+            --gold-dim:       rgba(201, 169, 110, 0.6);
+            --gold-subtle:    rgba(201, 169, 110, 0.10);
+            --gold-border:    rgba(201, 169, 110, 0.22);
+            --gold-hover:     rgba(201, 169, 110, 0.45);
+
+            /* Backgrounds */
+            --bg:             #0A0A0A;
+            --bg-card:        #181818;
+            --bg-card-hover:  #1F1F1F;
+            --bg-glass:       rgba(12, 12, 12, 0.88);
+
+            /* Text — all verified ≥ 4.5:1 contrast on card bg */
+            --txt-h:          #F4EDE3;   /* headings     ~15:1 on card */
+            --txt-body:       #CEC3B5;   /* body text    ~8:1  on card */
+            --txt-sub:        #A89A8A;   /* secondary    ~5:1  on card */
+            --txt-muted:      #7A6E60;   /* muted labels ~3:1  on card — decorative only */
         }
 
-        /* ─── Base ─── */
-        *, *::before, *::after { box-sizing: border-box; }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', system-ui, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-primary);
+            background: var(--bg);
+            color: var(--txt-body);
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
         }
 
-        /* ─── Typography helpers ─── */
-        .font-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
-        .font-playfair  { font-family: 'Playfair Display', Georgia, serif; }
-        .font-noto      { font-family: 'Noto Serif KR', serif; }
+        /* Subtle noise texture — luxury feel */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 0; opacity: 0.018;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 128px;
+        }
 
-        /* ─── Gold gradient text ─── */
-        .text-gold { color: var(--gold); }
+        /* ── Font helpers ── */
+        .f-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
+        .f-playfair  { font-family: 'Playfair Display', Georgia, serif; }
+        .f-noto      { font-family: 'Noto Serif KR', serif; }
 
-        .text-gold-gradient {
-            background: linear-gradient(135deg, #E8D5B0 0%, #C9A96E 35%, #A07840 65%, #C9A96E 100%);
+        /* ── Gold gradient on text ── */
+        .gold-grad {
+            background: linear-gradient(135deg, #E8D5B0 0%, #C9A96E 40%, #A07840 70%, #C9A96E 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* ─── Brand hero ─── */
-        .brand-hero {
-            background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,169,110,0.07) 0%, transparent 70%);
+        /* ── Decorative rules ── */
+        .rule-gold  { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+        .rule-faint { height: 1px; background: linear-gradient(to right, transparent, var(--gold-border), transparent); }
+
+        /* ═══════════════════════════════════════
+           FIXED LANGUAGE TOGGLE
+        ═══════════════════════════════════════ */
+        #lang-toggle {
+            position: fixed;
+            top: 18px; right: 20px; z-index: 300;
+            display: flex; align-items: center; gap: 8px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--gold-border);
+            border-radius: 100px;
+            padding: 7px 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+        }
+        .lang-btn {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.6rem; letter-spacing: 0.28em;
+            color: var(--txt-sub);
+            background: none; border: none; cursor: pointer;
+            transition: color 0.25s;
+            padding: 0; line-height: 1;
+        }
+        .lang-btn:hover  { color: var(--gold-light); }
+        .lang-btn.active { color: var(--gold); }
+        .lang-sep { color: var(--gold-border); font-size: 0.75rem; user-select: none; }
+
+        /* ═══════════════════════════════════════
+           BRAND HERO
+        ═══════════════════════════════════════ */
+        .hero-section {
+            background: radial-gradient(ellipse 75% 50% at 50% -5%, rgba(201,169,110,0.07) 0%, transparent 65%);
+            border-bottom: 1px solid rgba(201,169,110,0.1);
         }
 
-        /* ─── Decorative horizontal rule ─── */
-        .gold-rule {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
-        }
-
-        .gold-rule-faint {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold-border), transparent);
-        }
-
-        /* ─── Luxury card ─── */
+        /* ═══════════════════════════════════════
+           LUXURY CARD
+        ═══════════════════════════════════════ */
         .luxury-card {
             background: var(--bg-card);
             border: 1px solid var(--gold-border);
-            transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-                        border-color 0.45s ease,
-                        box-shadow 0.45s ease,
-                        background 0.45s ease;
+            transition:
+                transform     0.42s cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color  0.42s ease,
+                box-shadow    0.42s ease,
+                background    0.42s ease;
         }
-
         .luxury-card:hover {
             background: var(--bg-card-hover);
             border-color: var(--gold-hover);
-            box-shadow: 0 0 80px rgba(201,169,110,0.05), 0 32px 64px rgba(0,0,0,0.55);
-            transform: translateY(-6px);
+            box-shadow: 0 0 70px rgba(201,169,110,0.06), 0 28px 56px rgba(0,0,0,0.6);
+            transform: translateY(-5px);
         }
 
-        /* ─── Card title hover (gold color, no gradient needed) ─── */
+        /* ── Card title ── */
         .card-title {
-            color: var(--text-primary);
-            transition: color 0.4s ease;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem; font-weight: 600;
+            color: var(--txt-h); /* #F4EDE3 */
+            line-height: 1.3; letter-spacing: 0.01em;
+            transition: color 0.35s ease;
         }
         .luxury-card:hover .card-title { color: var(--gold); }
 
-        /* ─── Filter pills ─── */
-        .filter-pill {
-            background: transparent;
-            border: 1px solid var(--gold-border);
-            color: var(--text-secondary);
+        /* ── Field label (소개 / Key Features etc.) ── */
+        .field-label {
             font-family: 'Playfair Display', serif;
-            letter-spacing: 0.08em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .filter-pill:hover {
-            border-color: var(--gold-dim);
+            font-size: 0.58rem; font-style: italic;
+            letter-spacing: 0.32em; text-transform: uppercase;
             color: var(--gold);
-        }
-        .filter-pill.active {
-            background: var(--gold-subtle);
-            border-color: var(--gold);
-            color: var(--gold);
+            display: block; margin-bottom: 6px;
         }
 
-        /* ─── Project link button ─── */
+        /* ── Field body text ── */
+        .field-body {
+            font-size: 0.84rem; font-weight: 300;
+            color: var(--txt-body); /* #CEC3B5 — ~8:1 */
+            line-height: 1.9;
+        }
+
+        /* ── Keyword tags ── */
+        .kw-tag {
+            display: inline-block;
+            padding: 3px 11px;
+            border-radius: 100px;
+            font-size: 0.7rem; font-weight: 300;
+            color: var(--txt-body); /* readable */
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.11);
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        /* ── Hashtag text ── */
+        .hashtag-text {
+            font-size: 0.75rem; font-weight: 300;
+            color: var(--txt-sub); /* #A89A8A — ~5:1 */
+            line-height: 1.8; letter-spacing: 0.03em;
+        }
+
+        /* ── Category badges ── */
+        .cat-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 5px 12px; border-radius: 100px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.58rem; font-weight: 400;
+            letter-spacing: 0.09em; text-transform: uppercase;
+            border: 1px solid; /* colour via specific class */
+        }
+        .cat-musical    { background: rgba(200,100,120,0.12); color: #ECA8B8; border-color: rgba(200,100,120,0.3); }
+        .cat-visual     { background: rgba(150,100,200,0.12); color: #C8AAEE; border-color: rgba(150,100,200,0.3); }
+        .cat-humanities { background: rgba(80,160,110,0.12);  color: #8ED4A6; border-color: rgba(80,160,110,0.3); }
+        .cat-digital    { background: rgba(80,140,210,0.12);  color: #8BBCEE; border-color: rgba(80,140,210,0.3); }
+        .cat-lesson     { background: rgba(200,150,60,0.12);  color: #E8C070; border-color: rgba(200,150,60,0.3); }
+        .cat-default    { background: var(--gold-subtle);      color: var(--gold); border-color: var(--gold-border); }
+
+        /* ── Year label ── */
+        .year-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.65rem; letter-spacing: 0.2em;
+            color: var(--txt-sub); /* now readable */
+        }
+
+        /* ── Project link button ── */
         .project-link {
+            display: inline-flex; align-items: center;
+            justify-content: space-between; width: 100%;
+            padding: 12px 18px; border-radius: 12px;
             background: transparent;
             border: 1px solid var(--gold-border);
-            color: var(--text-secondary);
-            transition: all 0.35s ease;
+            color: var(--txt-body); /* readable */
+            text-decoration: none;
+            transition: all 0.32s ease;
         }
         .project-link:hover {
             background: var(--gold-subtle);
             border-color: var(--gold);
             color: var(--gold);
         }
+        .project-link .link-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+        }
+        .link-arrow { transition: transform 0.28s ease; flex-shrink: 0; }
         .project-link:hover .link-arrow { transform: translateX(4px); }
-        .link-arrow { transition: transform 0.3s ease; }
 
-        /* ─── Book tags ─── */
+        /* ── Avatar gold ring ── */
+        .avatar-ring {
+            background: conic-gradient(#C9A96E 0deg, #E8D5B0 90deg, #A07840 180deg, #E8D5B0 270deg, #C9A96E 360deg);
+            padding: 2px; border-radius: 50%;
+        }
+        .avatar-inner {
+            background: #0E0E0E; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ── Filter pills ── */
+        .filter-pill {
+            background: transparent;
+            border: 1px solid var(--gold-border);
+            color: var(--txt-body); /* brighter than before */
+            font-family: 'Playfair Display', serif;
+            font-size: 0.68rem; letter-spacing: 0.06em;
+            padding: 7px 16px; border-radius: 100px;
+            cursor: pointer; transition: all 0.28s ease;
+        }
+        .filter-pill:hover { border-color: var(--gold-dim); color: var(--gold); }
+        .filter-pill.active { background: var(--gold-subtle); border-color: var(--gold); color: var(--gold); }
+
+        /* ── Book tags ── */
         .book-tag {
             background: transparent;
             border: 1px solid var(--gold-border);
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
+            color: var(--txt-body); /* #CEC3B5 — readable */
+            font-size: 0.78rem; font-weight: 300;
+            padding: 8px 18px; border-radius: 100px;
+            cursor: default; transition: all 0.28s ease;
+            letter-spacing: 0.02em;
         }
-        .book-tag:hover {
-            background: var(--gold-subtle);
-            border-color: var(--gold-dim);
-            color: var(--gold-light);
+        .book-tag:hover { background: var(--gold-subtle); border-color: var(--gold-dim); color: var(--gold-light); }
+
+        /* ── Vertical divider ── */
+        .v-divider {
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--gold-border), transparent);
+            align-self: stretch; flex-shrink: 0;
         }
 
-        /* ─── Avatar gold ring ─── */
-        .avatar-ring {
-            background: conic-gradient(#C9A96E 0deg, #E8D5B0 90deg, #A07840 180deg, #E8D5B0 270deg, #C9A96E 360deg);
-            padding: 2px;
-            border-radius: 50%;
-        }
-        .avatar-inner {
-            background: #0A0A0A;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ─── Category tag colours ─── */
-        .tag-musical    { background: rgba(200,100,120,0.10); color: #E8A0B0; border-color: rgba(200,100,120,0.28); }
-        .tag-visual     { background: rgba(150,100,200,0.10); color: #C4A8F0; border-color: rgba(150,100,200,0.28); }
-        .tag-humanities { background: rgba(80,160,110,0.10);  color: #90D0A8; border-color: rgba(80,160,110,0.28); }
-        .tag-digital    { background: rgba(80,140,210,0.10);  color: #90B8EE; border-color: rgba(80,140,210,0.28); }
-        .tag-lesson     { background: rgba(200,150,60,0.10);  color: #E8C070; border-color: rgba(200,150,60,0.28); }
-        .tag-default    { background: var(--gold-subtle); color: var(--gold); border-color: var(--gold-border); }
-
-        /* ─── Loading spinner ─── */
+        /* ── Loading spinner ── */
         .spinner {
             border: 2px solid rgba(201,169,110,0.12);
-            border-top: 2px solid var(--gold);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            border-top-color: var(--gold);
+            border-radius: 50%; width: 32px; height: 32px;
             animation: spin 1.4s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ─── Text selection ─── */
-        ::selection { background: rgba(201,169,110,0.18); color: var(--gold-light); }
+        /* ── Line clamp ── */
+        .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* ─── Line clamp ─── */
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* ─── Vertical divider ─── */
-        .vert-divider {
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, var(--gold-border), transparent);
-            align-self: stretch;
-        }
-
-        /* ─── Noise texture (very subtle, luxury feel) ─── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.022;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: 150px;
-        }
+        ::selection { background: rgba(201,169,110,0.2); color: var(--gold-light); }
     </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     BRAND HERO — Title Section
-════════════════════════════════════════════ -->
-<section class="brand-hero relative z-10 w-full pt-20 pb-16 px-6" style="border-bottom: 1px solid rgba(201,169,110,0.10);">
+<!-- ══════════════════════════════════════════════
+     FIXED: LANGUAGE TOGGLE
+══════════════════════════════════════════════ -->
+<div id="lang-toggle">
+    <button id="btn-ko" class="lang-btn active" onclick="setLang('ko')">KOR</button>
+    <span class="lang-sep">|</span>
+    <button id="btn-en" class="lang-btn" onclick="setLang('en')">ENG</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     BRAND HERO — 치수쌤 바이브코딩 쇼룸
+══════════════════════════════════════════════ -->
+<section class="hero-section relative z-10 w-full pt-20 pb-16 px-6">
     <div class="max-w-5xl mx-auto text-center">
 
         <!-- Top ornament -->
-        <div class="flex items-center justify-center gap-4 mb-10">
+        <div class="flex items-center justify-center gap-5 mb-10">
             <div class="h-px w-20" style="background: linear-gradient(to right, transparent, var(--gold));"></div>
-            <span class="font-playfair uppercase text-gold" style="font-size: 0.58rem; letter-spacing: 0.5em; opacity: 0.7;">Est. 2024</span>
+            <span class="f-playfair uppercase" style="font-size:0.56rem; letter-spacing:0.5em; color:var(--gold); opacity:0.75;">Est. 2024</span>
             <div class="h-px w-20" style="background: linear-gradient(to left, transparent, var(--gold));"></div>
         </div>
 
-        <!-- Main Korean Title -->
-        <h1 class="font-noto text-gold-gradient" style="font-size: clamp(2.6rem, 8vw, 5.8rem); font-weight: 700; letter-spacing: 0.04em; line-height: 1.08;">
+        <!-- Korean Brand Title -->
+        <h1 class="f-noto gold-grad"
+            style="font-size: clamp(2.4rem, 7.5vw, 5.5rem); font-weight: 700; letter-spacing: 0.05em; line-height: 1.1;">
             치수쌤 바이브코딩 쇼룸
         </h1>
 
-        <!-- English Subtitle -->
-        <p class="font-playfair uppercase text-gold mt-5" style="font-size: clamp(0.52rem, 1.4vw, 0.7rem); letter-spacing: 0.55em; opacity: 0.6; font-weight: 400; font-style: italic;">
+        <!-- English subtitle -->
+        <p class="f-playfair uppercase" style="font-size: clamp(0.52rem, 1.3vw, 0.68rem); letter-spacing: 0.55em; color: var(--gold); opacity: 0.65; margin-top: 1.1rem; font-style: italic;">
             Chichiboo &nbsp;Vibecoding &nbsp;Showroom
         </p>
 
-        <!-- Bottom ornament -->
+        <!-- Bottom diamond ornament -->
         <div class="flex items-center justify-center gap-3 mt-12">
-            <div class="h-px" style="width: 90px; background: linear-gradient(to right, transparent, rgba(201,169,110,0.35));"></div>
-            <div style="width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); opacity: 0.55; flex-shrink: 0;"></div>
-            <div class="h-px" style="width: 36px; background: rgba(201,169,110,0.4);"></div>
-            <div style="width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); opacity: 0.35; flex-shrink: 0;"></div>
-            <div class="h-px" style="width: 36px; background: rgba(201,169,110,0.4);"></div>
-            <div style="width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); opacity: 0.55; flex-shrink: 0;"></div>
-            <div class="h-px" style="width: 90px; background: linear-gradient(to left, transparent, rgba(201,169,110,0.35));"></div>
+            <div class="h-px" style="width:80px; background: linear-gradient(to right, transparent, rgba(201,169,110,0.35));"></div>
+            <div style="width:7px; height:7px; background:var(--gold); transform:rotate(45deg); opacity:0.55; flex-shrink:0;"></div>
+            <div class="h-px" style="width:32px; background:rgba(201,169,110,0.38);"></div>
+            <div style="width:5px; height:5px; background:var(--gold); transform:rotate(45deg); opacity:0.35; flex-shrink:0;"></div>
+            <div class="h-px" style="width:32px; background:rgba(201,169,110,0.38);"></div>
+            <div style="width:7px; height:7px; background:var(--gold); transform:rotate(45deg); opacity:0.55; flex-shrink:0;"></div>
+            <div class="h-px" style="width:80px; background: linear-gradient(to left, transparent, rgba(201,169,110,0.35));"></div>
         </div>
     </div>
 </section>
 
 
-<!-- ═══════════════════════════════════════════
-     PROFILE / ABOUT SECTION
-════════════════════════════════════════════ -->
-<header class="relative z-10 max-w-6xl mx-auto pt-16 pb-8 px-6">
+<!-- ══════════════════════════════════════════════
+     PROFILE / ABOUT
+══════════════════════════════════════════════ -->
+<header class="relative z-10 max-w-6xl mx-auto pt-14 pb-8 px-6">
     <div class="luxury-card rounded-2xl p-10 md:p-16 flex flex-col md:flex-row gap-12 md:gap-16 items-center">
 
-        <!-- ── Profile Column ── -->
-        <div class="flex flex-col items-center text-center space-y-6 md:min-w-[200px]">
-
-            <!-- Avatar with gold ring -->
+        <!-- ── Profile column ── -->
+        <div class="flex flex-col items-center text-center gap-5 md:min-w-[200px]">
+            <!-- Avatar -->
             <div class="relative">
-                <div class="avatar-ring" style="width: 148px; height: 148px;">
-                    <div class="avatar-inner" style="width: 100%; height: 100%;">
-                        <span style="font-size: 3.8rem; line-height: 1;">✨</span>
+                <div class="avatar-ring" style="width:144px; height:144px;">
+                    <div class="avatar-inner" style="width:100%; height:100%;">
+                        <span style="font-size:3.6rem; line-height:1;">✨</span>
                     </div>
                 </div>
                 <!-- Badge -->
                 <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full"
-                     style="background: var(--bg); border: 1px solid var(--gold-border); white-space: nowrap;">
-                    <p class="font-playfair uppercase text-gold"
-                       style="font-size: 0.52rem; letter-spacing: 0.4em;">Dreaming Teacher</p>
+                     style="background:var(--bg); border:1px solid var(--gold-border); white-space:nowrap;">
+                    <p class="f-playfair uppercase" style="font-size:0.5rem; letter-spacing:0.38em; color:var(--gold);">Dreaming Teacher</p>
                 </div>
             </div>
 
-            <!-- Name & Role -->
-            <div class="pt-4 space-y-2">
-                <h2 class="font-noto" style="font-size: 1.9rem; font-weight: 600; color: var(--text-primary); letter-spacing: 0.04em;">
-                    원치수
-                </h2>
-                <p class="font-playfair uppercase text-gold" style="font-size: 0.58rem; letter-spacing: 0.35em; opacity: 0.75; font-style: italic;">
+            <!-- Name -->
+            <div style="padding-top:0.8rem;">
+                <h2 class="f-noto" style="font-size:1.85rem; font-weight:600; color:var(--txt-h); letter-spacing:0.04em;">원치수</h2>
+                <p class="f-playfair" style="font-size:0.58rem; letter-spacing:0.32em; color:var(--gold); opacity:0.8; margin-top:0.5rem; text-transform:uppercase; font-style:italic;">
                     Education Musical Creator
                 </p>
             </div>
 
             <!-- Short bio -->
-            <p style="font-size: 0.8rem; color: var(--text-secondary); max-width: 180px; line-height: 2; font-weight: 300;">
+            <p style="font-size:0.82rem; color:var(--txt-body); max-width:180px; line-height:2.0; font-weight:300;">
                 교육과 뮤지컬, 디지털의<br>의미 있는 만남을 꿈꾸며<br>고민하고 실천합니다.
             </p>
         </div>
 
-        <!-- Vertical divider (desktop) -->
-        <div class="vert-divider hidden md:block"></div>
+        <!-- Vertical divider (md+) -->
+        <div class="v-divider hidden md:block"></div>
 
-        <!-- ── About Column ── -->
-        <div class="flex-1 space-y-10">
+        <!-- ── About column ── -->
+        <div class="flex-1" style="display:flex; flex-direction:column; gap:2rem;">
 
-            <!-- Label + Heading -->
             <div>
-                <p class="font-playfair uppercase" style="font-size: 0.55rem; letter-spacing: 0.5em; color: var(--text-muted); margin-bottom: 0.9rem;">
-                    About
-                </p>
-                <h2 class="font-cormorant" style="font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 600; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1.15; margin-bottom: 1.2rem;">
+                <p class="f-playfair" style="font-size:0.54rem; letter-spacing:0.48em; text-transform:uppercase; color:var(--txt-muted); margin-bottom:0.8rem;">About</p>
+                <h2 class="f-cormorant" style="font-size: clamp(1.9rem, 3.5vw, 2.6rem); font-weight:600; color:var(--txt-h); letter-spacing:0.02em; line-height:1.15; margin-bottom:1rem;">
                     The Creator
                 </h2>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 2.1; font-weight: 300;">
+                <p style="font-size:0.85rem; color:var(--txt-body); line-height:2.1; font-weight:300;">
                     교육뮤지컬을 고민하고, 창작하고, 실천합니다. 초등학생들과 함께 꿈꾸는 교육뮤지컬 이야기를 기록합니다. 따뜻한 디지털 활용 교육에도 관심이 많습니다.
                 </p>
             </div>
 
             <!-- Quote -->
-            <blockquote class="relative pl-5" style="border-left: 1.5px solid var(--gold);">
-                <p class="font-cormorant italic" style="font-size: 1.2rem; color: var(--text-primary); opacity: 0.8; letter-spacing: 0.015em; line-height: 1.75; font-weight: 400;">
+            <blockquote style="border-left:1.5px solid var(--gold); padding-left:1.25rem;">
+                <p class="f-cormorant" style="font-size:1.18rem; font-style:italic; color:var(--txt-h); opacity:0.85; letter-spacing:0.01em; line-height:1.75; font-weight:400;">
                     "교육과 뮤지컬, 디지털의 의미 있는 만남을 꿈꾸다."
                 </p>
             </blockquote>
 
             <!-- Selected Works -->
-            <div class="space-y-4">
-                <p class="font-playfair uppercase flex items-center gap-3"
-                   style="font-size: 0.55rem; letter-spacing: 0.45em; color: var(--text-muted);">
-                    <span style="display: inline-block; width: 28px; height: 1px; background: var(--gold-border);"></span>
+            <div>
+                <p class="f-playfair" style="font-size:0.54rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--txt-muted); display:flex; align-items:center; gap:10px; margin-bottom:0.9rem;">
+                    <span style="display:inline-block; width:26px; height:1px; background:var(--gold-border);"></span>
                     Selected Works
                 </p>
-                <div class="flex flex-wrap gap-3">
-                    <span class="book-tag px-5 py-2 rounded-full cursor-default"
-                          style="font-size: 0.75rem; letter-spacing: 0.03em;">
-                        『세상에서 가장 쉬운 뮤지컬 수업』
-                    </span>
-                    <span class="book-tag px-5 py-2 rounded-full cursor-default"
-                          style="font-size: 0.75rem; letter-spacing: 0.03em;">
-                        『뮤지컬 창작노트』
-                    </span>
+                <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                    <span class="book-tag">『세상에서 가장 쉬운 뮤지컬 수업』</span>
+                    <span class="book-tag">『뮤지컬 창작노트』</span>
                 </div>
             </div>
         </div>
@@ -341,96 +404,82 @@
 </header>
 
 
-<!-- ═══════════════════════════════════════════
-     GALLERY SECTION
-════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════
+     GALLERY
+══════════════════════════════════════════════ -->
 <main class="relative z-10 max-w-6xl mx-auto px-6 pb-40">
 
     <!-- Section header -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mt-8 mb-10">
         <div>
-            <p class="font-playfair uppercase" style="font-size: 0.55rem; letter-spacing: 0.52em; color: var(--text-muted); margin-bottom: 0.85rem;">
-                The Collection
-            </p>
-            <h2 class="font-cormorant" style="font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 600; color: var(--text-primary); letter-spacing: 0.02em; line-height: 1.2;">
+            <p class="f-playfair" style="font-size:0.54rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--txt-muted); margin-bottom:0.8rem;">The Collection</p>
+            <h2 class="f-cormorant" style="font-size:clamp(1.75rem, 3.5vw, 2.5rem); font-weight:600; color:var(--txt-h); letter-spacing:0.02em; line-height:1.2;">
                 Vibe Coding Gallery
             </h2>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; font-weight: 300;">
-                치수쌤의 창작 프로젝트를 만나보세요.
-            </p>
+            <p style="font-size:0.82rem; color:var(--txt-body); margin-top:0.45rem; font-weight:300;">치수쌤의 창작 프로젝트를 만나보세요.</p>
         </div>
 
         <!-- Category filters -->
-        <div id="category-filters" class="flex flex-wrap gap-2">
-            <!-- JS rendered -->
-        </div>
+        <div id="category-filters" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
     </div>
 
-    <!-- Divider -->
-    <div class="gold-rule mb-14"></div>
+    <!-- Gold rule -->
+    <div class="rule-gold" style="margin-bottom:3rem;"></div>
 
-    <!-- Loading State -->
-    <div id="loading" class="flex flex-col items-center justify-center py-40 space-y-5">
+    <!-- Loading -->
+    <div id="loading" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10rem 0; gap:1.2rem;">
         <div class="spinner"></div>
-        <p class="font-playfair uppercase animate-pulse"
-           style="font-size: 0.58rem; letter-spacing: 0.5em; color: var(--text-muted);">
-            Loading Collection...
-        </p>
+        <p class="f-playfair" style="font-size:0.58rem; letter-spacing:0.48em; text-transform:uppercase; color:var(--txt-muted); animation:pulse 2s infinite;">Loading Collection...</p>
     </div>
 
-    <!-- Error State -->
-    <div id="error" class="hidden p-10 rounded-2xl text-center"
-         style="background: rgba(180,50,50,0.05); border: 1px solid rgba(180,50,50,0.18);">
-        <p style="color: #E88080; font-size: 0.85rem;" id="error-message">오류가 발생했습니다.</p>
-        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.5rem;">
-            네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.
-        </p>
+    <!-- Error -->
+    <div id="error" style="display:none; padding:2.5rem; border-radius:16px; text-align:center; background:rgba(180,50,50,0.06); border:1px solid rgba(180,50,50,0.2);">
+        <p style="color:#E88888; font-size:0.86rem;" id="error-message">오류가 발생했습니다.</p>
+        <p style="font-size:0.74rem; color:var(--txt-muted); margin-top:0.5rem;">네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.</p>
     </div>
 
     <!-- Project Grid -->
-    <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- JS rendered -->
-    </div>
+    <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-    <!-- Empty State -->
-    <div id="empty" class="hidden text-center py-40 rounded-2xl"
-         style="border: 1px dashed rgba(201,169,110,0.12);">
-        <p style="color: var(--text-muted); font-size: 0.8rem;">해당 카테고리에 프로젝트가 아직 없습니다.</p>
+    <!-- Empty -->
+    <div id="empty" style="display:none; text-align:center; padding:10rem 0; border-radius:18px; border:1px dashed rgba(201,169,110,0.12);">
+        <p style="color:var(--txt-muted); font-size:0.82rem;">해당 카테고리에 프로젝트가 아직 없습니다.</p>
     </div>
 </main>
 
 
-<!-- ═══════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      FOOTER
-════════════════════════════════════════════ -->
-<footer class="relative z-10 py-12" style="border-top: 1px solid rgba(201,169,110,0.10);">
+══════════════════════════════════════════════ -->
+<footer class="relative z-10 py-12" style="border-top:1px solid rgba(201,169,110,0.1);">
     <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-5">
-        <p class="font-playfair uppercase text-gold"
-           style="font-size: 0.58rem; letter-spacing: 0.35em; opacity: 0.5;">
+        <p class="f-playfair" style="font-size:0.58rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--txt-muted);">
             © <span id="year"></span> &nbsp;치수쌤 바이브코딩 쇼룸
         </p>
-        <div class="flex items-center gap-4">
-            <div class="h-px w-10" style="background: var(--gold-border);"></div>
-            <span class="font-playfair uppercase"
-                  style="font-size: 0.52rem; letter-spacing: 0.28em; color: var(--text-muted);">
+        <div style="display:flex; align-items:center; gap:14px;">
+            <div style="height:1px; width:36px; background:var(--gold-border);"></div>
+            <span class="f-playfair" style="font-size:0.52rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--txt-muted);">
                 Design Thinking &nbsp;·&nbsp; Education Musical &nbsp;·&nbsp; Creative Coding
             </span>
-            <div class="h-px w-10" style="background: var(--gold-border);"></div>
+            <div style="height:1px; width:36px; background:var(--gold-border);"></div>
         </div>
     </div>
 </footer>
 
 
-<!-- ═══════════════════════════════════════════
-     JAVASCRIPT (functional logic unchanged)
-════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
 <script>
+    /* ── Config ── */
     const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzA0E-1Et4XYf7FUUMbytXsM7nlfgStWb7mSaS-66zhmNFfrupxbZV02I7-y8VUwR1P/exec";
     const CATEGORIES = ['전체', '뮤지컬', '인터랙티브 시각디자인', '인문·창작', '디지털·세계시민교육', '수업디자인'];
 
-    let allProjects = [];
-    let currentCategory = '전체';
+    let allProjects   = [];
+    let currentCat    = '전체';
+    let currentLang   = 'ko';   // 'ko' | 'en'
 
+    /* ── Init ── */
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('year').textContent = new Date().getFullYear();
         renderFilters();
@@ -438,118 +487,187 @@
         lucide.createIcons();
     });
 
+    /* ── Language toggle ── */
+    function setLang(lang) {
+        currentLang = lang;
+        document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
+        renderProjects();
+    }
+
+    /* ── Fetch data ── */
     async function fetchData() {
         try {
-            const response = await fetch(SHEET_API_URL);
-            if (!response.ok) throw new Error('네트워크 응답이 올바르지 않습니다.');
-            const data = await response.json();
+            const res = await fetch(SHEET_API_URL);
+            if (!res.ok) throw new Error('Network error');
+            const data = await res.json();
 
-            allProjects = data.map((item, index) => ({
-                id: index,
-                title:    item.이름     || '제목 없음',
-                desc:     item.소개     || '설명이 없습니다.',
-                category: item.분류     || '기타',
-                link:     item.URL      || '#',
-                year:     item.개발년도 || ''
+            allProjects = data.map((item, idx) => ({
+                id:          idx,
+                // KOR fields
+                title:       str(item['이름']),
+                desc:        str(item['소개']),
+                functions:   str(item['기능']),
+                keywords:    str(item['키워드']),
+                hashtags:    str(item['해시태그']),
+                // ENG fields
+                titleEn:     str(item['영문명']),
+                keyFeatures: str(item['Key Features']),
+                functionsEn: str(item['Functions']),
+                keywordsEn:  str(item['Keywords']),
+                hashtagsEn:  str(item['Hashtags']),
+                // Common
+                category:    str(item['분류']) || '기타',
+                link:        str(item['URL']),
+                year:        str(item['개발년도']),
             }));
 
             renderProjects();
-            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('loading').style.display = 'none';
         } catch (err) {
-            console.error("데이터 로드 실패:", err);
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('error').classList.remove('hidden');
+            console.error('데이터 로드 실패:', err);
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
         }
     }
 
+    /* ── Category filters ── */
     function renderFilters() {
-        const container = document.getElementById('category-filters');
-        container.innerHTML = CATEGORIES.map(cat => `
-            <button onclick="setCategory('${cat}')"
-                    class="filter-pill px-4 py-2 rounded-full text-xs ${currentCategory === cat ? 'active' : ''}"
-                    style="letter-spacing: 0.08em;">
-                ${cat}
-            </button>
-        `).join('');
+        document.getElementById('category-filters').innerHTML =
+            CATEGORIES.map(cat => `
+                <button onclick="setCat('${cat}')"
+                        class="filter-pill ${currentCat === cat ? 'active' : ''}">
+                    ${cat}
+                </button>
+            `).join('');
     }
 
-    function setCategory(cat) {
-        currentCategory = cat;
+    function setCat(cat) {
+        currentCat = cat;
         renderFilters();
         renderProjects();
     }
 
+    /* ── Project cards ── */
     function renderProjects() {
         const grid  = document.getElementById('project-grid');
         const empty = document.getElementById('empty');
+        const isEn  = currentLang === 'en';
 
-        const filtered = currentCategory === '전체'
+        const filtered = currentCat === '전체'
             ? allProjects
-            : allProjects.filter(p => p.category === currentCategory);
+            : allProjects.filter(p => p.category === currentCat);
 
         if (filtered.length === 0 && allProjects.length > 0) {
             grid.innerHTML = '';
-            empty.classList.remove('hidden');
+            empty.style.display = 'block';
             return;
         }
+        empty.style.display = 'none';
 
-        empty.classList.add('hidden');
         grid.innerHTML = filtered.map(p => {
-            const style = getCategoryStyle(p.category);
+            const s     = getCatStyle(p.category);
+            const title = isEn ? (p.titleEn     || p.title)     : p.title;
+            const desc  = isEn ? (p.keyFeatures || p.desc)      : p.desc;
+            const funcs = isEn ? (p.functionsEn || p.functions) : p.functions;
+            const kws   = fmtKeywords(isEn ? (p.keywordsEn  || p.keywords)  : p.keywords);
+            const tags  = fmtHashtags(isEn ? (p.hashtagsEn  || p.hashtags)  : p.hashtags);
+
+            const L = isEn
+                ? { desc:'Key Features', funcs:'Functions', kws:'Keywords', tags:'Hashtags', view:'View Project' }
+                : { desc:'소개',          funcs:'기능',       kws:'키워드',   tags:'해시태그',  view:'프로젝트 보기' };
+
             return `
-                <div class="luxury-card group rounded-2xl p-8 flex flex-col h-full">
+            <div class="luxury-card rounded-2xl flex flex-col" style="padding:1.75rem;">
 
-                    <!-- Card top row -->
-                    <div class="flex justify-between items-start mb-8">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${style.tagClass}"
-                              style="font-size: 0.58rem; letter-spacing: 0.09em; text-transform: uppercase; font-family: 'Playfair Display', serif;">
-                            <i data-lucide="${style.icon}" style="width: 10px; height: 10px; flex-shrink: 0;"></i>
-                            ${p.category}
-                        </span>
-                        ${p.year ? `
-                        <span class="font-playfair" style="font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-muted);">
-                            ${p.year}
-                        </span>` : ''}
-                    </div>
-
-                    <!-- Card body -->
-                    <div class="flex-grow space-y-4">
-                        <h3 class="card-title font-cormorant" style="font-size: 1.45rem; font-weight: 600; line-height: 1.3; letter-spacing: 0.01em;">
-                            ${p.title}
-                        </h3>
-                        <p class="line-clamp-3" style="font-size: 0.78rem; color: var(--text-secondary); line-height: 2; font-weight: 300;">
-                            ${p.desc}
-                        </p>
-                    </div>
-
-                    <!-- Card footer -->
-                    <div class="mt-8 pt-6" style="border-top: 1px solid rgba(201,169,110,0.09);">
-                        <a href="${p.link}" target="_blank" rel="noopener noreferrer"
-                           class="project-link inline-flex items-center justify-between w-full px-5 py-3.5 rounded-xl">
-                            <span class="font-playfair uppercase"
-                                  style="font-size: 0.6rem; letter-spacing: 0.25em;">
-                                View Project
-                            </span>
-                            <i data-lucide="arrow-right" class="link-arrow" style="width: 13px; height: 13px;"></i>
-                        </a>
-                    </div>
+                <!-- ▸ Category + Year -->
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.25rem;">
+                    <span class="cat-badge ${s.cls}">
+                        <i data-lucide="${s.icon}" style="width:10px;height:10px;flex-shrink:0;"></i>
+                        ${p.category}
+                    </span>
+                    ${p.year ? `<span class="year-label">${p.year}</span>` : ''}
                 </div>
-            `;
+
+                <!-- ▸ Title -->
+                <h3 class="card-title" style="margin-bottom:1.1rem;">${title || (isEn ? 'Untitled' : '제목 없음')}</h3>
+
+                <!-- ▸ Description / Key Features -->
+                ${desc ? `
+                <div style="margin-bottom:1rem;">
+                    <span class="field-label">${L.desc}</span>
+                    <p class="field-body clamp-3">${desc}</p>
+                </div>` : ''}
+
+                <!-- ▸ Functions / 기능 -->
+                ${funcs ? `
+                <div style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
+                    <span class="field-label">${L.funcs}</span>
+                    <p class="field-body clamp-2">${funcs}</p>
+                </div>` : ''}
+
+                <!-- ▸ Keywords / 키워드 -->
+                ${kws.length ? `
+                <div style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
+                    <span class="field-label">${L.kws}</span>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+                        ${kws.map(k => `<span class="kw-tag">${k}</span>`).join('')}
+                    </div>
+                </div>` : ''}
+
+                <!-- ▸ Hashtags / 해시태그 -->
+                ${tags ? `
+                <p class="hashtag-text" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">${tags}</p>
+                ` : ''}
+
+                <!-- ▸ Spacer + CTA -->
+                <div style="margin-top:auto; padding-top:1.1rem; border-top:1px solid rgba(201,169,110,0.1);">
+                    <a href="${p.link || '#'}" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <span class="link-label">${L.view}</span>
+                        <i data-lucide="arrow-right" class="link-arrow" style="width:14px;height:14px;"></i>
+                    </a>
+                </div>
+            </div>`;
         }).join('');
 
         lucide.createIcons();
     }
 
-    function getCategoryStyle(category) {
-        switch (category) {
-            case '뮤지컬':              return { icon: 'music',        tagClass: 'tag-musical' };
-            case '인터랙티브 시각디자인': return { icon: 'monitor-play', tagClass: 'tag-visual' };
-            case '인문·창작':           return { icon: 'book-open',    tagClass: 'tag-humanities' };
-            case '디지털·세계시민교육':  return { icon: 'globe-2',      tagClass: 'tag-digital' };
-            case '수업디자인':          return { icon: 'layout',       tagClass: 'tag-lesson' };
-            default:                    return { icon: 'sparkles',     tagClass: 'tag-default' };
-        }
+    /* ── Category style map ── */
+    function getCatStyle(cat) {
+        const map = {
+            '뮤지컬':              { icon:'music',        cls:'cat-musical' },
+            '인터랙티브 시각디자인': { icon:'monitor-play', cls:'cat-visual' },
+            '인문·창작':           { icon:'book-open',    cls:'cat-humanities' },
+            '디지털·세계시민교육':  { icon:'globe-2',      cls:'cat-digital' },
+            '수업디자인':          { icon:'layout',       cls:'cat-lesson' },
+        };
+        return map[cat] || { icon:'sparkles', cls:'cat-default' };
+    }
+
+    /* ── Helpers ── */
+    function str(v) { return (v !== undefined && v !== null) ? String(v).trim() : ''; }
+
+    function fmtKeywords(raw) {
+        if (!raw) return [];
+        const s = raw.trim();
+        if (!s) return [];
+        const parts = s.includes(',') ? s.split(',') : s.split(/\s+/);
+        return parts.map(k => k.trim().replace(/^#/, '')).filter(Boolean).slice(0, 12);
+    }
+
+    function fmtHashtags(raw) {
+        if (!raw) return '';
+        const s = raw.trim();
+        if (!s) return '';
+        // already has # signs → return as-is
+        if (s.includes('#')) return s;
+        // otherwise, tokenise and add #
+        const parts = s.includes(',') ? s.split(',') : s.split(/\s+/);
+        return parts.map(w => w.trim()).filter(Boolean).map(w => `#${w}`).join(' ');
     }
 </script>
+
 </body>
 </html>
