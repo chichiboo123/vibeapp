@@ -8,62 +8,66 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- Pretendard (본문용) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-gov.min.css" />
+
+    <!-- Serif display fonts (타이틀용) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Serif+KR:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Serif+KR:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
 
     <style>
         /* ══════════════════════════════════════
-           DESIGN TOKENS  —  High-Contrast Dark
+           DESIGN TOKENS
         ══════════════════════════════════════ */
         :root {
-            /* Gold palette */
-            --gold:           #C9A96E;
-            --gold-light:     #E8D5B0;
-            --gold-dim:       rgba(201, 169, 110, 0.6);
-            --gold-subtle:    rgba(201, 169, 110, 0.10);
-            --gold-border:    rgba(201, 169, 110, 0.22);
-            --gold-hover:     rgba(201, 169, 110, 0.45);
+            --gold:          #C9A96E;
+            --gold-light:    #E8D5B0;
+            --gold-dim:      rgba(201, 169, 110, 0.65);
+            --gold-subtle:   rgba(201, 169, 110, 0.12);
+            --gold-border:   rgba(201, 169, 110, 0.30);
+            --gold-hover:    rgba(201, 169, 110, 0.50);
 
-            /* Backgrounds */
-            --bg:             #0A0A0A;
-            --bg-card:        #181818;
-            --bg-card-hover:  #1F1F1F;
-            --bg-glass:       rgba(12, 12, 12, 0.88);
+            /* 웜 다크 — 퓨어 블랙 대신 따뜻한 짙은 갈색 계열 */
+            --bg:            #0E0C09;
+            --bg-card:       #201E16;
+            --bg-card-hover: #28261C;
+            --bg-glass:      rgba(14, 12, 9, 0.90);
 
-            /* Text — all verified ≥ 4.5:1 contrast on card bg */
-            --txt-h:          #F4EDE3;   /* headings     ~15:1 on card */
-            --txt-body:       #CEC3B5;   /* body text    ~8:1  on card */
-            --txt-sub:        #A89A8A;   /* secondary    ~5:1  on card */
-            --txt-muted:      #7A6E60;   /* muted labels ~3:1  on card — decorative only */
+            /* Text — 모두 카드 배경 대비 ≥ 4.5:1 */
+            --txt-h:         #F9F4EC;   /* 헤딩   ~16:1 */
+            --txt-body:      #DDD4C4;   /* 본문   ~9:1  */
+            --txt-sub:       #B8A898;   /* 보조   ~5:1  */
+            --txt-muted:     #9A8E80;   /* 뮤티드 ~4:1  */
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
 
+        /* Pretendard = 본문 기본 폰트 */
         body {
-            font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', system-ui, sans-serif;
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', -apple-system, system-ui, sans-serif;
             background: var(--bg);
             color: var(--txt-body);
             -webkit-font-smoothing: antialiased;
             min-height: 100vh;
         }
 
-        /* Subtle noise texture — luxury feel */
+        /* 섹션 배경 구분을 위한 미세 노이즈 */
         body::before {
             content: '';
             position: fixed; inset: 0;
-            pointer-events: none; z-index: 0; opacity: 0.018;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 0; opacity: 0.016;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
             background-size: 128px;
         }
 
-        /* ── Font helpers ── */
+        /* ── 타이틀 전용 폰트 (Pretendard 적용 제외) ── */
         .f-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
         .f-playfair  { font-family: 'Playfair Display', Georgia, serif; }
         .f-noto      { font-family: 'Noto Serif KR', serif; }
 
-        /* ── Gold gradient on text ── */
+        /* ── 골드 그라디언트 텍스트 ── */
         .gold-grad {
             background: linear-gradient(135deg, #E8D5B0 0%, #C9A96E 40%, #A07840 70%, #C9A96E 100%);
             -webkit-background-clip: text;
@@ -71,12 +75,10 @@
             background-clip: text;
         }
 
-        /* ── Decorative rules ── */
         .rule-gold  { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
-        .rule-faint { height: 1px; background: linear-gradient(to right, transparent, var(--gold-border), transparent); }
 
         /* ═══════════════════════════════════════
-           FIXED LANGUAGE TOGGLE
+           고정 언어 토글
         ═══════════════════════════════════════ */
         #lang-toggle {
             position: fixed;
@@ -88,126 +90,124 @@
             border: 1px solid var(--gold-border);
             border-radius: 100px;
             padding: 7px 18px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 28px rgba(0,0,0,0.6);
         }
         .lang-btn {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.6rem; letter-spacing: 0.28em;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
             color: var(--txt-sub);
             background: none; border: none; cursor: pointer;
-            transition: color 0.25s;
+            transition: color 0.22s;
             padding: 0; line-height: 1;
         }
         .lang-btn:hover  { color: var(--gold-light); }
         .lang-btn.active { color: var(--gold); }
-        .lang-sep { color: var(--gold-border); font-size: 0.75rem; user-select: none; }
+        .lang-sep { color: var(--gold-border); font-size: 0.8rem; user-select: none; }
 
         /* ═══════════════════════════════════════
-           BRAND HERO
+           브랜드 히어로
         ═══════════════════════════════════════ */
         .hero-section {
-            background: radial-gradient(ellipse 75% 50% at 50% -5%, rgba(201,169,110,0.07) 0%, transparent 65%);
-            border-bottom: 1px solid rgba(201,169,110,0.1);
+            background: radial-gradient(ellipse 75% 55% at 50% -5%, rgba(201,169,110,0.09) 0%, transparent 65%);
+            border-bottom: 1px solid rgba(201,169,110,0.12);
         }
 
         /* ═══════════════════════════════════════
-           LUXURY CARD
+           럭셔리 카드
         ═══════════════════════════════════════ */
         .luxury-card {
             background: var(--bg-card);
             border: 1px solid var(--gold-border);
-            transition:
-                transform     0.42s cubic-bezier(0.22, 0.61, 0.36, 1),
-                border-color  0.42s ease,
-                box-shadow    0.42s ease,
-                background    0.42s ease;
+            transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1),
+                        border-color 0.42s ease, box-shadow 0.42s ease, background 0.42s ease;
         }
         .luxury-card:hover {
             background: var(--bg-card-hover);
             border-color: var(--gold-hover);
-            box-shadow: 0 0 70px rgba(201,169,110,0.06), 0 28px 56px rgba(0,0,0,0.6);
+            box-shadow: 0 0 80px rgba(201,169,110,0.07), 0 30px 60px rgba(0,0,0,0.55);
             transform: translateY(-5px);
         }
 
-        /* ── Card title ── */
+        /* ── 카드 타이틀 (serif 유지) ── */
         .card-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem; font-weight: 600;
-            color: var(--txt-h); /* #F4EDE3 */
+            font-size: 1.52rem; font-weight: 600;
+            color: var(--txt-h);
             line-height: 1.3; letter-spacing: 0.01em;
-            transition: color 0.35s ease;
+            transition: color 0.32s ease;
         }
         .luxury-card:hover .card-title { color: var(--gold); }
 
-        /* ── Field label (소개 / Key Features etc.) ── */
+        /* ── 필드 레이블 (italic serif) ── */
         .field-label {
             font-family: 'Playfair Display', serif;
-            font-size: 0.58rem; font-style: italic;
-            letter-spacing: 0.32em; text-transform: uppercase;
+            font-size: 0.6rem; font-style: italic;
+            letter-spacing: 0.28em; text-transform: uppercase;
             color: var(--gold);
-            display: block; margin-bottom: 6px;
+            display: block; margin-bottom: 7px;
         }
 
-        /* ── Field body text ── */
+        /* ── 필드 본문 → Pretendard ── */
         .field-body {
-            font-size: 0.84rem; font-weight: 300;
-            color: var(--txt-body); /* #CEC3B5 — ~8:1 */
-            line-height: 1.9;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.875rem; font-weight: 400;
+            color: var(--txt-body);
+            line-height: 1.85;
         }
 
-        /* ── Keyword tags ── */
+        /* ── 키워드 태그 → Pretendard ── */
         .kw-tag {
             display: inline-block;
-            padding: 3px 11px;
-            border-radius: 100px;
-            font-size: 0.7rem; font-weight: 300;
-            color: var(--txt-body); /* readable */
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.11);
-            letter-spacing: 0.03em;
-            white-space: nowrap;
+            padding: 4px 12px; border-radius: 100px;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.72rem; font-weight: 400;
+            color: var(--txt-body);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.13);
+            letter-spacing: 0.02em; white-space: nowrap;
         }
 
-        /* ── Hashtag text ── */
+        /* ── 해시태그 → Pretendard ── */
         .hashtag-text {
-            font-size: 0.75rem; font-weight: 300;
-            color: var(--txt-sub); /* #A89A8A — ~5:1 */
-            line-height: 1.8; letter-spacing: 0.03em;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.78rem; font-weight: 400;
+            color: var(--txt-sub);
+            line-height: 1.8; letter-spacing: 0.02em;
         }
 
-        /* ── Category badges ── */
+        /* ── 카테고리 배지 → Pretendard ── */
         .cat-badge {
             display: inline-flex; align-items: center; gap: 5px;
-            padding: 5px 12px; border-radius: 100px;
-            font-family: 'Playfair Display', serif;
-            font-size: 0.58rem; font-weight: 400;
-            letter-spacing: 0.09em; text-transform: uppercase;
-            border: 1px solid; /* colour via specific class */
+            padding: 5px 13px; border-radius: 100px;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.68rem; font-weight: 500;
+            letter-spacing: 0.05em;
+            border: 1px solid;
         }
-        .cat-musical    { background: rgba(200,100,120,0.12); color: #ECA8B8; border-color: rgba(200,100,120,0.3); }
-        .cat-visual     { background: rgba(150,100,200,0.12); color: #C8AAEE; border-color: rgba(150,100,200,0.3); }
-        .cat-humanities { background: rgba(80,160,110,0.12);  color: #8ED4A6; border-color: rgba(80,160,110,0.3); }
-        .cat-digital    { background: rgba(80,140,210,0.12);  color: #8BBCEE; border-color: rgba(80,140,210,0.3); }
-        .cat-lesson     { background: rgba(200,150,60,0.12);  color: #E8C070; border-color: rgba(200,150,60,0.3); }
-        .cat-default    { background: var(--gold-subtle);      color: var(--gold); border-color: var(--gold-border); }
+        .cat-musical    { background: rgba(200,100,120,0.14); color: #F0AABF; border-color: rgba(200,100,120,0.35); }
+        .cat-visual     { background: rgba(150,100,200,0.14); color: #CEB0F8; border-color: rgba(150,100,200,0.35); }
+        .cat-humanities { background: rgba(80,170,110,0.14);  color: #90DCA8; border-color: rgba(80,170,110,0.35); }
+        .cat-digital    { background: rgba(80,145,220,0.14);  color: #8EC2F8; border-color: rgba(80,145,220,0.35); }
+        .cat-lesson     { background: rgba(210,155,60,0.14);  color: #F0C870; border-color: rgba(210,155,60,0.35); }
+        .cat-default    { background: var(--gold-subtle); color: var(--gold); border-color: var(--gold-border); }
 
-        /* ── Year label ── */
+        /* ── 연도 레이블 → Pretendard ── */
         .year-label {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.65rem; letter-spacing: 0.2em;
-            color: var(--txt-sub); /* now readable */
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.72rem; font-weight: 400;
+            letter-spacing: 0.12em; color: var(--txt-sub);
         }
 
-        /* ── Project link button ── */
+        /* ── 프로젝트 링크 버튼 → Pretendard ── */
         .project-link {
             display: inline-flex; align-items: center;
             justify-content: space-between; width: 100%;
             padding: 12px 18px; border-radius: 12px;
             background: transparent;
             border: 1px solid var(--gold-border);
-            color: var(--txt-body); /* readable */
+            color: var(--txt-body);
             text-decoration: none;
-            transition: all 0.32s ease;
+            transition: all 0.30s ease;
         }
         .project-link:hover {
             background: var(--gold-subtle);
@@ -215,55 +215,58 @@
             color: var(--gold);
         }
         .project-link .link-label {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.76rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
         }
-        .link-arrow { transition: transform 0.28s ease; flex-shrink: 0; }
+        .link-arrow { transition: transform 0.26s ease; flex-shrink: 0; }
         .project-link:hover .link-arrow { transform: translateX(4px); }
 
-        /* ── Avatar gold ring ── */
+        /* ── 아바타 골드 링 ── */
         .avatar-ring {
             background: conic-gradient(#C9A96E 0deg, #E8D5B0 90deg, #A07840 180deg, #E8D5B0 270deg, #C9A96E 360deg);
-            padding: 2px; border-radius: 50%;
+            padding: 2.5px; border-radius: 50%;
         }
         .avatar-inner {
-            background: #0E0E0E; border-radius: 50%;
+            background: #0E0E0A; border-radius: 50%;
+            overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* ── Filter pills ── */
+        /* ── 필터 필 → Pretendard ── */
         .filter-pill {
             background: transparent;
             border: 1px solid var(--gold-border);
-            color: var(--txt-body); /* brighter than before */
-            font-family: 'Playfair Display', serif;
-            font-size: 0.68rem; letter-spacing: 0.06em;
-            padding: 7px 16px; border-radius: 100px;
-            cursor: pointer; transition: all 0.28s ease;
+            color: var(--txt-body);
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
+            padding: 7px 18px; border-radius: 100px;
+            cursor: pointer; transition: all 0.26s ease;
         }
         .filter-pill:hover { border-color: var(--gold-dim); color: var(--gold); }
         .filter-pill.active { background: var(--gold-subtle); border-color: var(--gold); color: var(--gold); }
 
-        /* ── Book tags ── */
+        /* ── 책 태그 → Pretendard ── */
         .book-tag {
+            display: inline-block;
             background: transparent;
             border: 1px solid var(--gold-border);
-            color: var(--txt-body); /* #CEC3B5 — readable */
-            font-size: 0.78rem; font-weight: 300;
-            padding: 8px 18px; border-radius: 100px;
-            cursor: default; transition: all 0.28s ease;
-            letter-spacing: 0.02em;
+            color: var(--txt-body);
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.82rem; font-weight: 400;
+            padding: 9px 20px; border-radius: 100px;
+            text-decoration: none;
+            transition: all 0.26s ease; letter-spacing: 0.01em;
         }
         .book-tag:hover { background: var(--gold-subtle); border-color: var(--gold-dim); color: var(--gold-light); }
 
-        /* ── Vertical divider ── */
+        /* ── 수직 구분선 ── */
         .v-divider {
             width: 1px;
             background: linear-gradient(to bottom, transparent, var(--gold-border), transparent);
             align-self: stretch; flex-shrink: 0;
         }
 
-        /* ── Loading spinner ── */
+        /* ── 로딩 스피너 ── */
         .spinner {
             border: 2px solid rgba(201,169,110,0.12);
             border-top-color: var(--gold);
@@ -272,17 +275,16 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── Line clamp ── */
         .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-        ::selection { background: rgba(201,169,110,0.2); color: var(--gold-light); }
+        ::selection { background: rgba(201,169,110,0.22); color: var(--gold-light); }
     </style>
 </head>
 <body>
 
 <!-- ══════════════════════════════════════════════
-     FIXED: LANGUAGE TOGGLE
+     고정 언어 토글
 ══════════════════════════════════════════════ -->
 <div id="lang-toggle">
     <button id="btn-ko" class="lang-btn active" onclick="setLang('ko')">KOR</button>
@@ -292,111 +294,127 @@
 
 
 <!-- ══════════════════════════════════════════════
-     BRAND HERO — 치수쌤 바이브코딩 쇼룸
+     브랜드 히어로
 ══════════════════════════════════════════════ -->
 <section class="hero-section relative z-10 w-full pt-20 pb-16 px-6">
     <div class="max-w-5xl mx-auto text-center">
 
-        <!-- Top ornament -->
+        <!-- 상단 장식 -->
         <div class="flex items-center justify-center gap-5 mb-10">
-            <div class="h-px w-20" style="background: linear-gradient(to right, transparent, var(--gold));"></div>
+            <div style="height:1px; width:72px; background:linear-gradient(to right, transparent, var(--gold));"></div>
             <span class="f-playfair uppercase" style="font-size:0.56rem; letter-spacing:0.5em; color:var(--gold); opacity:0.75;">Est. 2024</span>
-            <div class="h-px w-20" style="background: linear-gradient(to left, transparent, var(--gold));"></div>
+            <div style="height:1px; width:72px; background:linear-gradient(to left, transparent, var(--gold));"></div>
         </div>
 
-        <!-- Korean Brand Title -->
-        <h1 class="f-noto gold-grad"
-            style="font-size: clamp(2.4rem, 7.5vw, 5.5rem); font-weight: 700; letter-spacing: 0.05em; line-height: 1.1;">
+        <!-- 메인 타이틀 (타이틀이므로 serif 유지) -->
+        <h1 id="hero-title" class="f-noto gold-grad"
+            style="font-size: clamp(2.4rem, 7.5vw, 5.4rem); font-weight: 700; letter-spacing: 0.05em; line-height: 1.1;">
             치수쌤 바이브코딩 쇼룸
         </h1>
 
-        <!-- English subtitle -->
-        <p class="f-playfair uppercase" style="font-size: clamp(0.52rem, 1.3vw, 0.68rem); letter-spacing: 0.55em; color: var(--gold); opacity: 0.65; margin-top: 1.1rem; font-style: italic;">
+        <!-- 영문 서브타이틀 -->
+        <p id="hero-sub" class="f-playfair uppercase"
+           style="font-size: clamp(0.52rem, 1.3vw, 0.68rem); letter-spacing: 0.55em; color: var(--gold); opacity: 0.65; margin-top: 1.1rem; font-style: italic;">
             Chichiboo &nbsp;Vibecoding &nbsp;Showroom
         </p>
 
-        <!-- Bottom diamond ornament -->
+        <!-- 하단 다이아몬드 장식 -->
         <div class="flex items-center justify-center gap-3 mt-12">
-            <div class="h-px" style="width:80px; background: linear-gradient(to right, transparent, rgba(201,169,110,0.35));"></div>
+            <div style="height:1px; width:76px; background:linear-gradient(to right, transparent, rgba(201,169,110,0.38));"></div>
             <div style="width:7px; height:7px; background:var(--gold); transform:rotate(45deg); opacity:0.55; flex-shrink:0;"></div>
-            <div class="h-px" style="width:32px; background:rgba(201,169,110,0.38);"></div>
-            <div style="width:5px; height:5px; background:var(--gold); transform:rotate(45deg); opacity:0.35; flex-shrink:0;"></div>
-            <div class="h-px" style="width:32px; background:rgba(201,169,110,0.38);"></div>
+            <div style="height:1px; width:30px; background:rgba(201,169,110,0.40);"></div>
+            <div style="width:5px; height:5px; background:var(--gold); transform:rotate(45deg); opacity:0.38; flex-shrink:0;"></div>
+            <div style="height:1px; width:30px; background:rgba(201,169,110,0.40);"></div>
             <div style="width:7px; height:7px; background:var(--gold); transform:rotate(45deg); opacity:0.55; flex-shrink:0;"></div>
-            <div class="h-px" style="width:80px; background: linear-gradient(to left, transparent, rgba(201,169,110,0.35));"></div>
+            <div style="height:1px; width:76px; background:linear-gradient(to left, transparent, rgba(201,169,110,0.38));"></div>
         </div>
     </div>
 </section>
 
 
 <!-- ══════════════════════════════════════════════
-     PROFILE / ABOUT
+     프로필 / 소개
 ══════════════════════════════════════════════ -->
 <header class="relative z-10 max-w-6xl mx-auto pt-14 pb-8 px-6">
     <div class="luxury-card rounded-2xl p-10 md:p-16 flex flex-col md:flex-row gap-12 md:gap-16 items-center">
 
-        <!-- ── Profile column ── -->
-        <div class="flex flex-col items-center text-center gap-5 md:min-w-[200px]">
-            <!-- Avatar -->
+        <!-- ── 프로필 컬럼 ── -->
+        <div class="flex flex-col items-center text-center gap-5 md:min-w-[210px]">
+
+            <!-- 아바타 이미지 + 골드 링 -->
             <div class="relative">
-                <div class="avatar-ring" style="width:144px; height:144px;">
+                <div class="avatar-ring" style="width:148px; height:148px;">
                     <div class="avatar-inner" style="width:100%; height:100%;">
-                        <span style="font-size:3.6rem; line-height:1;">✨</span>
+                        <img src="https://i.ibb.co/Tx52NF6Q/image.png"
+                             alt="원치수"
+                             style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
                     </div>
                 </div>
-                <!-- Badge -->
+                <!-- 뱃지 -->
                 <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full"
                      style="background:var(--bg); border:1px solid var(--gold-border); white-space:nowrap;">
-                    <p class="f-playfair uppercase" style="font-size:0.5rem; letter-spacing:0.38em; color:var(--gold);">Dreaming Teacher</p>
+                    <p id="profile-badge" class="f-playfair uppercase"
+                       style="font-size:0.5rem; letter-spacing:0.38em; color:var(--gold);">Dreaming Teacher</p>
                 </div>
             </div>
 
-            <!-- Name -->
+            <!-- 이름 -->
             <div style="padding-top:0.8rem;">
                 <h2 class="f-noto" style="font-size:1.85rem; font-weight:600; color:var(--txt-h); letter-spacing:0.04em;">원치수</h2>
-                <p class="f-playfair" style="font-size:0.58rem; letter-spacing:0.32em; color:var(--gold); opacity:0.8; margin-top:0.5rem; text-transform:uppercase; font-style:italic;">
+                <p id="profile-role" class="f-playfair"
+                   style="font-size:0.58rem; letter-spacing:0.3em; color:var(--gold); opacity:0.82; margin-top:0.5rem; text-transform:uppercase; font-style:italic;">
                     Education Musical Creator
                 </p>
             </div>
 
-            <!-- Short bio -->
-            <p style="font-size:0.82rem; color:var(--txt-body); max-width:180px; line-height:2.0; font-weight:300;">
+            <!-- 짧은 소개 → Pretendard -->
+            <p id="profile-bio"
+               style="font-size:0.85rem; font-weight:400; color:var(--txt-body); max-width:185px; line-height:2.0;">
                 교육과 뮤지컬, 디지털의<br>의미 있는 만남을 꿈꾸며<br>고민하고 실천합니다.
             </p>
         </div>
 
-        <!-- Vertical divider (md+) -->
+        <!-- 수직 구분선 (md+) -->
         <div class="v-divider hidden md:block"></div>
 
-        <!-- ── About column ── -->
+        <!-- ── About 컬럼 ── -->
         <div class="flex-1" style="display:flex; flex-direction:column; gap:2rem;">
 
             <div>
-                <p class="f-playfair" style="font-size:0.54rem; letter-spacing:0.48em; text-transform:uppercase; color:var(--txt-muted); margin-bottom:0.8rem;">About</p>
-                <h2 class="f-cormorant" style="font-size: clamp(1.9rem, 3.5vw, 2.6rem); font-weight:600; color:var(--txt-h); letter-spacing:0.02em; line-height:1.15; margin-bottom:1rem;">
+                <p id="about-label" class="f-playfair"
+                   style="font-size:0.54rem; letter-spacing:0.48em; text-transform:uppercase; color:var(--txt-muted); margin-bottom:0.8rem;">About</p>
+                <h2 id="about-title" class="f-cormorant"
+                    style="font-size:clamp(1.9rem, 3.5vw, 2.6rem); font-weight:600; color:var(--txt-h); letter-spacing:0.02em; line-height:1.15; margin-bottom:1rem;">
                     The Creator
                 </h2>
-                <p style="font-size:0.85rem; color:var(--txt-body); line-height:2.1; font-weight:300;">
+                <!-- 본문 → Pretendard -->
+                <p id="about-body"
+                   style="font-size:0.875rem; font-weight:400; color:var(--txt-body); line-height:2.0;">
                     교육뮤지컬을 고민하고, 창작하고, 실천합니다. 초등학생들과 함께 꿈꾸는 교육뮤지컬 이야기를 기록합니다. 따뜻한 디지털 활용 교육에도 관심이 많습니다.
                 </p>
             </div>
 
-            <!-- Quote -->
+            <!-- 인용구 (serif 유지 — display 요소) -->
             <blockquote style="border-left:1.5px solid var(--gold); padding-left:1.25rem;">
-                <p class="f-cormorant" style="font-size:1.18rem; font-style:italic; color:var(--txt-h); opacity:0.85; letter-spacing:0.01em; line-height:1.75; font-weight:400;">
+                <p id="about-quote" class="f-cormorant"
+                   style="font-size:1.2rem; font-style:italic; color:var(--txt-h); opacity:0.88; letter-spacing:0.01em; line-height:1.78; font-weight:400;">
                     "교육과 뮤지컬, 디지털의 의미 있는 만남을 꿈꾸다."
                 </p>
             </blockquote>
 
-            <!-- Selected Works -->
+            <!-- 저작물 -->
             <div>
-                <p class="f-playfair" style="font-size:0.54rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--txt-muted); display:flex; align-items:center; gap:10px; margin-bottom:0.9rem;">
+                <p id="works-label" class="f-playfair"
+                   style="font-size:0.54rem; letter-spacing:0.42em; text-transform:uppercase; color:var(--txt-muted); display:flex; align-items:center; gap:10px; margin-bottom:0.9rem;">
                     <span style="display:inline-block; width:26px; height:1px; background:var(--gold-border);"></span>
                     Selected Works
                 </p>
                 <div style="display:flex; flex-wrap:wrap; gap:10px;">
-                    <span class="book-tag">『세상에서 가장 쉬운 뮤지컬 수업』</span>
-                    <span class="book-tag">『뮤지컬 창작노트』</span>
+                    <!-- 책 클릭 링크 -->
+                    <a href="https://www.yes24.com/product/goods/103633243"
+                       target="_blank" rel="noopener noreferrer"
+                       class="book-tag">『세상에서 가장 쉬운 뮤지컬 수업』</a>
+                    <span class="book-tag" style="cursor:default;">『뮤지컬 창작노트』</span>
                 </div>
             </div>
         </div>
@@ -405,63 +423,81 @@
 
 
 <!-- ══════════════════════════════════════════════
-     GALLERY
+     갤러리
 ══════════════════════════════════════════════ -->
 <main class="relative z-10 max-w-6xl mx-auto px-6 pb-40">
 
-    <!-- Section header -->
+    <!-- 섹션 헤더 -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mt-8 mb-10">
         <div>
-            <p class="f-playfair" style="font-size:0.54rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--txt-muted); margin-bottom:0.8rem;">The Collection</p>
-            <h2 class="f-cormorant" style="font-size:clamp(1.75rem, 3.5vw, 2.5rem); font-weight:600; color:var(--txt-h); letter-spacing:0.02em; line-height:1.2;">
+            <p id="collection-label" class="f-playfair"
+               style="font-size:0.54rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--txt-muted); margin-bottom:0.8rem;">The Collection</p>
+            <h2 id="gallery-title" class="f-cormorant"
+                style="font-size:clamp(1.75rem, 3.5vw, 2.5rem); font-weight:600; color:var(--txt-h); letter-spacing:0.02em; line-height:1.2;">
                 Vibe Coding Gallery
             </h2>
-            <p style="font-size:0.82rem; color:var(--txt-body); margin-top:0.45rem; font-weight:300;">치수쌤의 창작 프로젝트를 만나보세요.</p>
+            <!-- Pretendard -->
+            <p id="gallery-sub"
+               style="font-size:0.875rem; font-weight:400; color:var(--txt-body); margin-top:0.45rem;">
+               치수쌤의 창작 프로젝트를 만나보세요.
+            </p>
         </div>
 
-        <!-- Category filters -->
+        <!-- 카테고리 필터 -->
         <div id="category-filters" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
     </div>
 
-    <!-- Gold rule -->
+    <!-- 골드 룰 -->
     <div class="rule-gold" style="margin-bottom:3rem;"></div>
 
-    <!-- Loading -->
+    <!-- 로딩 -->
     <div id="loading" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10rem 0; gap:1.2rem;">
         <div class="spinner"></div>
-        <p class="f-playfair" style="font-size:0.58rem; letter-spacing:0.48em; text-transform:uppercase; color:var(--txt-muted); animation:pulse 2s infinite;">Loading Collection...</p>
+        <p id="loading-text"
+           style="font-size:0.78rem; font-weight:500; letter-spacing:0.35em; text-transform:uppercase; color:var(--txt-muted);">
+            Loading Collection...
+        </p>
     </div>
 
-    <!-- Error -->
-    <div id="error" style="display:none; padding:2.5rem; border-radius:16px; text-align:center; background:rgba(180,50,50,0.06); border:1px solid rgba(180,50,50,0.2);">
-        <p style="color:#E88888; font-size:0.86rem;" id="error-message">오류가 발생했습니다.</p>
-        <p style="font-size:0.74rem; color:var(--txt-muted); margin-top:0.5rem;">네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.</p>
+    <!-- 에러 -->
+    <div id="error" style="display:none; padding:2.5rem; border-radius:16px; text-align:center; background:rgba(180,50,50,0.07); border:1px solid rgba(180,50,50,0.22);">
+        <p id="error-message" style="color:#F09090; font-size:0.9rem; font-weight:500;">오류가 발생했습니다.</p>
+        <p id="error-sub" style="font-size:0.8rem; color:var(--txt-muted); margin-top:0.5rem;">네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.</p>
     </div>
 
-    <!-- Project Grid -->
+    <!-- 프로젝트 그리드 -->
     <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-    <!-- Empty -->
-    <div id="empty" style="display:none; text-align:center; padding:10rem 0; border-radius:18px; border:1px dashed rgba(201,169,110,0.12);">
-        <p style="color:var(--txt-muted); font-size:0.82rem;">해당 카테고리에 프로젝트가 아직 없습니다.</p>
+    <!-- 빈 상태 -->
+    <div id="empty" style="display:none; text-align:center; padding:10rem 0; border-radius:18px; border:1px dashed rgba(201,169,110,0.14);">
+        <p id="empty-text" style="color:var(--txt-muted); font-size:0.875rem;">해당 카테고리에 프로젝트가 아직 없습니다.</p>
     </div>
 </main>
 
 
 <!-- ══════════════════════════════════════════════
-     FOOTER
+     푸터
 ══════════════════════════════════════════════ -->
-<footer class="relative z-10 py-12" style="border-top:1px solid rgba(201,169,110,0.1);">
+<footer class="relative z-10 py-12" style="border-top:1px solid rgba(201,169,110,0.12);">
     <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-5">
-        <p class="f-playfair" style="font-size:0.58rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--txt-muted);">
-            © <span id="year"></span> &nbsp;치수쌤 바이브코딩 쇼룸
-        </p>
+
+        <!-- 저작권 (링크) -->
+        <a id="footer-copy"
+           href="https://litt.ly/chichiboo" target="_blank" rel="noopener noreferrer"
+           style="font-family:'Pretendard',sans-serif; font-size:0.78rem; font-weight:500;
+                  letter-spacing:0.06em; color:var(--txt-sub); text-decoration:none;
+                  transition:color 0.24s ease;"
+           onmouseover="this.style.color='var(--gold)'"
+           onmouseout="this.style.color='var(--txt-sub)'">
+            © 교육뮤지컬 꿈꾸는 치수쌤
+        </a>
+
         <div style="display:flex; align-items:center; gap:14px;">
-            <div style="height:1px; width:36px; background:var(--gold-border);"></div>
-            <span class="f-playfair" style="font-size:0.52rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--txt-muted);">
+            <div style="height:1px; width:32px; background:var(--gold-border);"></div>
+            <span style="font-family:'Pretendard',sans-serif; font-size:0.7rem; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; color:var(--txt-muted);">
                 Design Thinking &nbsp;·&nbsp; Education Musical &nbsp;·&nbsp; Creative Coding
             </span>
-            <div style="height:1px; width:36px; background:var(--gold-border);"></div>
+            <div style="height:1px; width:32px; background:var(--gold-border);"></div>
         </div>
     </div>
 </footer>
@@ -473,30 +509,133 @@
 <script>
     /* ── Config ── */
     const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzA0E-1Et4XYf7FUUMbytXsM7nlfgStWb7mSaS-66zhmNFfrupxbZV02I7-y8VUwR1P/exec";
-    const CATEGORIES = ['전체', '뮤지컬', '인터랙티브 시각디자인', '인문·창작', '디지털·세계시민교육', '수업디자인'];
 
-    let allProjects   = [];
-    let currentCat    = '전체';
-    let currentLang   = 'ko';   // 'ko' | 'en'
+    // 내부 키는 항상 한국어; 수업디자인 → 수업·학급운영
+    const CATEGORIES = ['전체', '뮤지컬', '인터랙티브 시각디자인', '인문·창작', '디지털·세계시민교육', '수업·학급운영'];
 
-    /* ── Init ── */
+    let allProjects = [];
+    let currentCat  = '전체';
+    let currentLang = 'ko';
+
+    /* ── 다국어 UI 문자열 ── */
+    const UI = {
+        ko: {
+            pageTitle:      '치수쌤 바이브코딩 쇼룸',
+            heroTitle:      '치수쌤 바이브코딩 쇼룸',
+            heroTitleFont:  'f-noto',
+            heroSub:        'Chichiboo &nbsp;Vibecoding &nbsp;Showroom',
+            profileBadge:   'Dreaming Teacher',
+            profileRole:    'Education Musical Creator',
+            profileBio:     '교육과 뮤지컬, 디지털의<br>의미 있는 만남을 꿈꾸며<br>고민하고 실천합니다.',
+            aboutLabel:     'About',
+            aboutTitle:     'The Creator',
+            aboutBody:      '교육뮤지컬을 고민하고, 창작하고, 실천합니다. 초등학생들과 함께 꿈꾸는 교육뮤지컬 이야기를 기록합니다. 따뜻한 디지털 활용 교육에도 관심이 많습니다.',
+            aboutQuote:     '"교육과 뮤지컬, 디지털의 의미 있는 만남을 꿈꾸다."',
+            worksLabel:     'Selected Works',
+            collectionLabel:'The Collection',
+            galleryTitle:   'Vibe Coding Gallery',
+            gallerySub:     '치수쌤의 창작 프로젝트를 만나보세요.',
+            loadingText:    'Loading Collection...',
+            emptyText:      '해당 카테고리에 프로젝트가 아직 없습니다.',
+            errorMsg:       '오류가 발생했습니다.',
+            errorSub:       '네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.',
+            footerCopy:     '© 교육뮤지컬 꿈꾸는 치수쌤',
+            categories: {
+                '전체':              '전체',
+                '뮤지컬':            '뮤지컬',
+                '인터랙티브 시각디자인': '인터랙티브 시각디자인',
+                '인문·창작':          '인문·창작',
+                '디지털·세계시민교육':  '디지털·세계시민교육',
+                '수업·학급운영':       '수업·학급운영',
+            },
+            card: {
+                desc: '소개', funcs: '기능', kws: '키워드', tags: '해시태그', view: '프로젝트 보기',
+                untitled: '제목 없음',
+            },
+        },
+        en: {
+            pageTitle:      'Chichiboo Vibecoding Showroom',
+            heroTitle:      'Chichiboo<br>Vibecoding Showroom',
+            heroTitleFont:  'f-playfair',
+            heroSub:        'Chichiboo &nbsp;Vibecoding &nbsp;Showroom',
+            profileBadge:   'Dreaming Teacher',
+            profileRole:    'Education Musical Creator',
+            profileBio:     'Dreaming of meaningful connections<br>between education, musicals,<br>and digital innovation.',
+            aboutLabel:     'About',
+            aboutTitle:     'The Creator',
+            aboutBody:      'I contemplate, create, and bring educational musicals to life. I document stories of educational musicals dreamed alongside elementary students. I am also passionate about warm and meaningful digital education.',
+            aboutQuote:     '"Dreaming of meaningful connections between education, musicals, and the digital world."',
+            worksLabel:     'Selected Works',
+            collectionLabel:'The Collection',
+            galleryTitle:   'Vibe Coding Gallery',
+            gallerySub:     'Explore the creative projects of Chichiboo.',
+            loadingText:    'Loading Collection...',
+            emptyText:      'No projects found in this category.',
+            errorMsg:       'An error occurred.',
+            errorSub:       'Please check your network or Google Apps Script settings.',
+            footerCopy:     '© Dreaming Educational Musical Creator',
+            categories: {
+                '전체':              'All',
+                '뮤지컬':            'Musical',
+                '인터랙티브 시각디자인': 'Interactive Visual Design',
+                '인문·창작':          'Humanities & Creative',
+                '디지털·세계시민교육':  'Digital & Global Citizenship',
+                '수업·학급운영':       'Lesson & Classroom',
+            },
+            card: {
+                desc: 'Key Features', funcs: 'Functions', kws: 'Keywords', tags: 'Hashtags', view: 'View Project',
+                untitled: 'Untitled',
+            },
+        },
+    };
+
+    /* ── 초기화 ── */
     document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('year').textContent = new Date().getFullYear();
         renderFilters();
         fetchData();
         lucide.createIcons();
     });
 
-    /* ── Language toggle ── */
+    /* ── 언어 전환 ── */
     function setLang(lang) {
         currentLang = lang;
         document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
+
+        const t = UI[lang];
+        document.title = t.pageTitle;
+
+        // 히어로 타이틀 (폰트 클래스도 교체)
+        const heroEl = document.getElementById('hero-title');
+        heroEl.className = t.heroTitleFont + ' gold-grad';
+        heroEl.innerHTML = t.heroTitle;
+
+        // 나머지 정적 요소
+        document.getElementById('hero-sub').innerHTML    = t.heroSub;
+        document.getElementById('profile-badge').textContent = t.profileBadge;
+        document.getElementById('profile-role').textContent  = t.profileRole;
+        document.getElementById('profile-bio').innerHTML     = t.profileBio;
+        document.getElementById('about-label').textContent   = t.aboutLabel;
+        document.getElementById('about-title').textContent   = t.aboutTitle;
+        document.getElementById('about-body').textContent    = t.aboutBody;
+        document.getElementById('about-quote').textContent   = t.aboutQuote;
+        document.getElementById('works-label').innerHTML =
+            `<span style="display:inline-block;width:26px;height:1px;background:var(--gold-border);"></span>${t.worksLabel}`;
+        document.getElementById('collection-label').textContent = t.collectionLabel;
+        document.getElementById('gallery-title').textContent    = t.galleryTitle;
+        document.getElementById('gallery-sub').textContent      = t.gallerySub;
+        document.getElementById('loading-text').textContent     = t.loadingText;
+        document.getElementById('empty-text').textContent       = t.emptyText;
+        document.getElementById('error-message').textContent    = t.errorMsg;
+        document.getElementById('error-sub').textContent        = t.errorSub;
+        document.getElementById('footer-copy').textContent      = t.footerCopy;
+
+        renderFilters();
         renderProjects();
     }
 
-    /* ── Fetch data ── */
+    /* ── 데이터 가져오기 ── */
     async function fetchData() {
         try {
             const res = await fetch(SHEET_API_URL);
@@ -505,19 +644,16 @@
 
             allProjects = data.map((item, idx) => ({
                 id:          idx,
-                // KOR fields
                 title:       str(item['이름']),
                 desc:        str(item['소개']),
                 functions:   str(item['기능']),
                 keywords:    str(item['키워드']),
                 hashtags:    str(item['해시태그']),
-                // ENG fields
                 titleEn:     str(item['영문명']),
                 keyFeatures: str(item['Key Features']),
                 functionsEn: str(item['Functions']),
                 keywordsEn:  str(item['Keywords']),
                 hashtagsEn:  str(item['Hashtags']),
-                // Common
                 category:    str(item['분류']) || '기타',
                 link:        str(item['URL']),
                 year:        str(item['개발년도']),
@@ -532,13 +668,14 @@
         }
     }
 
-    /* ── Category filters ── */
+    /* ── 카테고리 필터 렌더링 ── */
     function renderFilters() {
+        const t = UI[currentLang];
         document.getElementById('category-filters').innerHTML =
             CATEGORIES.map(cat => `
                 <button onclick="setCat('${cat}')"
                         class="filter-pill ${currentCat === cat ? 'active' : ''}">
-                    ${cat}
+                    ${t.categories[cat] || cat}
                 </button>
             `).join('');
     }
@@ -549,11 +686,12 @@
         renderProjects();
     }
 
-    /* ── Project cards ── */
+    /* ── 프로젝트 카드 렌더링 ── */
     function renderProjects() {
         const grid  = document.getElementById('project-grid');
         const empty = document.getElementById('empty');
         const isEn  = currentLang === 'en';
+        const t     = UI[currentLang];
 
         const filtered = currentCat === '전체'
             ? allProjects
@@ -567,62 +705,60 @@
         empty.style.display = 'none';
 
         grid.innerHTML = filtered.map(p => {
-            const s     = getCatStyle(p.category);
-            const title = isEn ? (p.titleEn     || p.title)     : p.title;
-            const desc  = isEn ? (p.keyFeatures || p.desc)      : p.desc;
-            const funcs = isEn ? (p.functionsEn || p.functions) : p.functions;
-            const kws   = fmtKeywords(isEn ? (p.keywordsEn  || p.keywords)  : p.keywords);
-            const tags  = fmtHashtags(isEn ? (p.hashtagsEn  || p.hashtags)  : p.hashtags);
-
-            const L = isEn
-                ? { desc:'Key Features', funcs:'Functions', kws:'Keywords', tags:'Hashtags', view:'View Project' }
-                : { desc:'소개',          funcs:'기능',       kws:'키워드',   tags:'해시태그',  view:'프로젝트 보기' };
+            const s        = getCatStyle(p.category);
+            const catLabel = t.categories[p.category] || p.category;
+            const title    = isEn ? (p.titleEn     || p.title)     : p.title;
+            const desc     = isEn ? (p.keyFeatures || p.desc)      : p.desc;
+            const funcs    = isEn ? (p.functionsEn || p.functions) : p.functions;
+            const kws      = fmtKeywords(isEn ? (p.keywordsEn || p.keywords) : p.keywords);
+            const tags     = fmtHashtags(isEn ? (p.hashtagsEn || p.hashtags) : p.hashtags);
+            const L        = t.card;
 
             return `
-            <div class="luxury-card rounded-2xl flex flex-col" style="padding:1.75rem;">
+            <div class="luxury-card rounded-2xl flex flex-col" style="padding:1.8rem;">
 
-                <!-- ▸ Category + Year -->
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.25rem;">
+                <!-- 카테고리 + 연도 -->
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem;">
                     <span class="cat-badge ${s.cls}">
-                        <i data-lucide="${s.icon}" style="width:10px;height:10px;flex-shrink:0;"></i>
-                        ${p.category}
+                        <i data-lucide="${s.icon}" style="width:11px;height:11px;flex-shrink:0;"></i>
+                        ${catLabel}
                     </span>
                     ${p.year ? `<span class="year-label">${p.year}</span>` : ''}
                 </div>
 
-                <!-- ▸ Title -->
-                <h3 class="card-title" style="margin-bottom:1.1rem;">${title || (isEn ? 'Untitled' : '제목 없음')}</h3>
+                <!-- 타이틀 (serif) -->
+                <h3 class="card-title" style="margin-bottom:1.1rem;">${title || L.untitled}</h3>
 
-                <!-- ▸ Description / Key Features -->
+                <!-- 소개 / Key Features -->
                 ${desc ? `
                 <div style="margin-bottom:1rem;">
                     <span class="field-label">${L.desc}</span>
                     <p class="field-body clamp-3">${desc}</p>
                 </div>` : ''}
 
-                <!-- ▸ Functions / 기능 -->
+                <!-- 기능 / Functions -->
                 ${funcs ? `
                 <div style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
                     <span class="field-label">${L.funcs}</span>
                     <p class="field-body clamp-2">${funcs}</p>
                 </div>` : ''}
 
-                <!-- ▸ Keywords / 키워드 -->
+                <!-- 키워드 / Keywords -->
                 ${kws.length ? `
                 <div style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
                     <span class="field-label">${L.kws}</span>
-                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:5px;">
                         ${kws.map(k => `<span class="kw-tag">${k}</span>`).join('')}
                     </div>
                 </div>` : ''}
 
-                <!-- ▸ Hashtags / 해시태그 -->
+                <!-- 해시태그 / Hashtags -->
                 ${tags ? `
                 <p class="hashtag-text" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">${tags}</p>
                 ` : ''}
 
-                <!-- ▸ Spacer + CTA -->
-                <div style="margin-top:auto; padding-top:1.1rem; border-top:1px solid rgba(201,169,110,0.1);">
+                <!-- CTA 버튼 -->
+                <div style="margin-top:auto; padding-top:1.1rem; border-top:1px solid rgba(201,169,110,0.12);">
                     <a href="${p.link || '#'}" target="_blank" rel="noopener noreferrer" class="project-link">
                         <span class="link-label">${L.view}</span>
                         <i data-lucide="arrow-right" class="link-arrow" style="width:14px;height:14px;"></i>
@@ -634,19 +770,19 @@
         lucide.createIcons();
     }
 
-    /* ── Category style map ── */
+    /* ── 카테고리 스타일 맵 (수업·학급운영 반영) ── */
     function getCatStyle(cat) {
         const map = {
             '뮤지컬':              { icon:'music',        cls:'cat-musical' },
             '인터랙티브 시각디자인': { icon:'monitor-play', cls:'cat-visual' },
             '인문·창작':           { icon:'book-open',    cls:'cat-humanities' },
             '디지털·세계시민교육':  { icon:'globe-2',      cls:'cat-digital' },
-            '수업디자인':          { icon:'layout',       cls:'cat-lesson' },
+            '수업·학급운영':        { icon:'layout',       cls:'cat-lesson' },
         };
         return map[cat] || { icon:'sparkles', cls:'cat-default' };
     }
 
-    /* ── Helpers ── */
+    /* ── 헬퍼 ── */
     function str(v) { return (v !== undefined && v !== null) ? String(v).trim() : ''; }
 
     function fmtKeywords(raw) {
@@ -661,9 +797,7 @@
         if (!raw) return '';
         const s = raw.trim();
         if (!s) return '';
-        // already has # signs → return as-is
         if (s.includes('#')) return s;
-        // otherwise, tokenise and add #
         const parts = s.includes(',') ? s.split(',') : s.split(/\s+/);
         return parts.map(w => w.trim()).filter(Boolean).map(w => `#${w}`).join(' ');
     }
