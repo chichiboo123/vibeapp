@@ -354,16 +354,16 @@
                 <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full"
                      style="background:var(--bg); border:1px solid var(--gold-border); white-space:nowrap;">
                     <p id="profile-badge" class="f-playfair uppercase"
-                       style="font-size:0.5rem; letter-spacing:0.38em; color:var(--gold);">Dreaming Teacher</p>
+                       style="font-size:0.46rem; letter-spacing:0.28em; color:var(--gold);">Education &amp; Musical Theatre</p>
                 </div>
             </div>
 
             <!-- 이름 -->
             <div style="padding-top:0.8rem;">
-                <h2 class="f-noto" style="font-size:1.85rem; font-weight:600; color:var(--txt-h); letter-spacing:0.04em;">원치수</h2>
-                <p id="profile-role" class="f-playfair"
-                   style="font-size:0.58rem; letter-spacing:0.3em; color:var(--gold); opacity:0.82; margin-top:0.5rem; text-transform:uppercase; font-style:italic;">
-                    Education Musical Creator
+                <h2 id="profile-name" class="f-noto" style="font-size:1.85rem; font-weight:600; color:var(--txt-h); letter-spacing:0.04em;">원치수</h2>
+                <p id="profile-role"
+                   style="font-size:0.78rem; font-weight:500; letter-spacing:0.02em; color:var(--gold); opacity:0.88; margin-top:0.5rem; line-height:1.6;">
+                    교육뮤지컬 전문가 / 경기도교육청 초등교사
                 </p>
             </div>
 
@@ -524,8 +524,9 @@
             heroTitle:      '치수쌤 바이브코딩 쇼룸',
             heroTitleFont:  'f-noto',
             heroSub:        'Chichiboo &nbsp;Vibecoding &nbsp;Showroom',
-            profileBadge:   'Dreaming Teacher',
-            profileRole:    'Education Musical Creator',
+            profileBadge:   'Education & Musical Theatre',
+            profileName:    '원치수',
+            profileRole:    '교육뮤지컬 전문가 / 경기도교육청 초등교사',
             profileBio:     '교육과 뮤지컬, 디지털의<br>의미 있는 만남을 꿈꾸며<br>고민하고 실천합니다.',
             aboutLabel:     'About',
             aboutTitle:     'The Creator',
@@ -558,8 +559,9 @@
             heroTitle:      'Chichiboo<br>Vibecoding Showroom',
             heroTitleFont:  'f-playfair',
             heroSub:        'Chichiboo &nbsp;Vibecoding &nbsp;Showroom',
-            profileBadge:   'Dreaming Teacher',
-            profileRole:    'Education Musical Creator',
+            profileBadge:   'Education & Musical Theatre',
+            profileName:    'Won Chisu',
+            profileRole:    'Education Musical Expert / Elementary Teacher, Gyeonggi-doe BOE',
             profileBio:     'Dreaming of meaningful connections<br>between education, musicals,<br>and digital innovation.',
             aboutLabel:     'About',
             aboutTitle:     'The Creator',
@@ -614,7 +616,23 @@
         // 나머지 정적 요소
         document.getElementById('hero-sub').innerHTML    = t.heroSub;
         document.getElementById('profile-badge').textContent = t.profileBadge;
-        document.getElementById('profile-role').textContent  = t.profileRole;
+        document.getElementById('profile-name').textContent  = t.profileName;
+
+        // 역할 텍스트 + 언어별 스타일 조정
+        const roleEl = document.getElementById('profile-role');
+        roleEl.textContent = t.profileRole;
+        if (lang === 'en') {
+            roleEl.style.fontSize      = '0.62rem';
+            roleEl.style.letterSpacing = '0.18em';
+            roleEl.style.fontStyle     = 'italic';
+            roleEl.style.fontFamily    = "'Playfair Display', serif";
+        } else {
+            roleEl.style.fontSize      = '0.78rem';
+            roleEl.style.letterSpacing = '0.02em';
+            roleEl.style.fontStyle     = 'normal';
+            roleEl.style.fontFamily    = "'Pretendard', sans-serif";
+        }
+
         document.getElementById('profile-bio').innerHTML     = t.profileBio;
         document.getElementById('about-label').textContent   = t.aboutLabel;
         document.getElementById('about-title').textContent   = t.aboutTitle;
