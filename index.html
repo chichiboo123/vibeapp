@@ -495,7 +495,7 @@
         <div style="display:flex; align-items:center; gap:14px;">
             <div style="height:1px; width:32px; background:var(--gold-border);"></div>
             <span style="font-family:'Pretendard',sans-serif; font-size:0.7rem; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; color:var(--txt-muted);">
-                Design Thinking &nbsp;·&nbsp; Education Musical &nbsp;·&nbsp; Creative Coding
+                Design Thinking &nbsp;·&nbsp; Education Musical Theatre &nbsp;·&nbsp; Creative Coding
             </span>
             <div style="height:1px; width:32px; background:var(--gold-border);"></div>
         </div>
@@ -561,12 +561,12 @@
             heroSub:        'Chichiboo &nbsp;Vibecoding &nbsp;Showroom',
             profileBadge:   'Education & Musical Theatre',
             profileName:    'Won Chisu',
-            profileRole:    'Education Musical Expert / Elementary Teacher, Gyeonggi-doe BOE',
-            profileBio:     'Dreaming of meaningful connections<br>between education, musicals,<br>and digital innovation.',
+            profileRole:    'Education Musical Theatre Expert<br>Elementary School Teacher(Gyeonggido Office of Education)',
+            profileBio:     'Dreaming of meaningful connections<br>between education, musical theatre,<br>and digital innovation.',
             aboutLabel:     'About',
             aboutTitle:     'The Creator',
-            aboutBody:      'I contemplate, create, and bring educational musicals to life. I document stories of educational musicals dreamed alongside elementary students. I am also passionate about warm and meaningful digital education.',
-            aboutQuote:     '"Dreaming of meaningful connections between education, musicals, and the digital world."',
+            aboutBody:      'I contemplate, create, and bring educational musical theatre to life. I document stories of educational musical theatre dreamed alongside elementary students. I am also passionate about warm and meaningful digital education.',
+            aboutQuote:     '"Dreaming of meaningful connections between education, musical theatre, and the digital world."',
             worksLabel:     'Selected Works',
             collectionLabel:'The Collection',
             galleryTitle:   'Vibe Coding Gallery',
@@ -575,10 +575,10 @@
             emptyText:      'No projects found in this category.',
             errorMsg:       'An error occurred.',
             errorSub:       'Please check your network or Google Apps Script settings.',
-            footerCopy:     '© Dreaming Educational Musical Creator',
+            footerCopy:     '© Dreaming Educational Musical Theatre Creator',
             categories: {
                 '전체':              'All',
-                '뮤지컬':            'Musical',
+                '뮤지컬':            'Musical Theatre',
                 '인터랙티브 시각디자인': 'Interactive Visual Design',
                 '인문·창작':          'Humanities & Creative',
                 '디지털·세계시민교육':  'Digital & Global Citizenship',
@@ -620,7 +620,7 @@
 
         // 역할 텍스트 + 언어별 스타일 조정
         const roleEl = document.getElementById('profile-role');
-        roleEl.textContent = t.profileRole;
+        roleEl.innerHTML = t.profileRole;
         if (lang === 'en') {
             roleEl.style.fontSize      = '0.62rem';
             roleEl.style.letterSpacing = '0.18em';
