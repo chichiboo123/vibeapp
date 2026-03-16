@@ -750,14 +750,15 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeProjectModal();
         });
-        /* ── 토큰(키워드/해시태그) 클릭 이벤트 위임 ── */
+        /* ── 토큰(키워드/해시태그) 클릭 이벤트 위임 ──
+           capture:true → 캡처 단계에서 먼저 가로채어 카드 onclick 차단 */
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('.js-token-search');
             if (!btn) return;
-            e.stopPropagation();   // 카드 클릭(모달 열림) 방지
+            e.stopPropagation();   // 카드 inline onclick 실행 전에 차단
             const token = btn.dataset.token || '';
             searchByToken(token);
-        });
+        }, true);
     });
 
     /* ── 언어 전환 ── */
