@@ -138,11 +138,11 @@
         }
         .luxury-card:hover .card-title { color: var(--gold); }
 
-        /* ── 필드 레이블 (italic serif) ── */
+        /* ── 필드 레이블 (본문과 동일 폰트, non-italic) ── */
         .field-label {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.6rem; font-style: italic;
-            letter-spacing: 0.28em; text-transform: uppercase;
+            font-family: 'Pretendard', sans-serif;
+            font-size: 0.7rem; font-style: normal; font-weight: 500;
+            letter-spacing: 0.14em; text-transform: uppercase;
             color: var(--gold);
             display: block; margin-bottom: 7px;
         }
@@ -166,6 +166,52 @@
             border: 1px solid rgba(255,255,255,0.13);
             letter-spacing: 0.02em; white-space: nowrap;
         }
+
+        .kw-tag-button {
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .kw-tag-button:hover {
+            color: var(--gold-light);
+            border-color: var(--gold-dim);
+            background: var(--gold-subtle);
+        }
+
+        .hashtag-chip {
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 6px;
+            transition: color 0.22s ease;
+        }
+        .hashtag-chip:hover { color: var(--gold-light); }
+
+        .query-info {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin: 0.7rem 0 1.2rem;
+            color: var(--txt-sub);
+            font-size: 0.78rem;
+        }
+        .query-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border: 1px solid var(--gold-border);
+            border-radius: 999px;
+            background: var(--gold-subtle);
+            color: var(--gold-light);
+        }
+        .query-clear {
+            border: none;
+            background: transparent;
+            color: var(--txt-sub);
+            cursor: pointer;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+        }
+        .query-clear:hover { color: var(--gold); }
 
         /* ── 해시태그 → Pretendard ── */
         .hashtag-text {
@@ -266,6 +312,56 @@
             align-self: stretch; flex-shrink: 0;
         }
 
+
+        .profile-link {
+            display: inline-block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .gallery-filter-wrap {
+            position: sticky;
+            top: 74px;
+            z-index: 120;
+            padding: 10px 0;
+            margin: -10px 0;
+            background: linear-gradient(to bottom, rgba(14, 12, 9, 0.95), rgba(14, 12, 9, 0.82));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .project-card-click {
+            cursor: pointer;
+        }
+
+        .modal-backdrop {
+            position: fixed; inset: 0; z-index: 500;
+            display: none; align-items: center; justify-content: center;
+            background: rgba(0, 0, 0, 0.68);
+            padding: 20px;
+        }
+        .modal-backdrop.show { display: flex; }
+        .modal-panel {
+            width: min(760px, 100%);
+            max-height: 88vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--gold-border);
+            padding: 1.5rem;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.58);
+        }
+        .modal-close {
+            border: 1px solid var(--gold-border);
+            color: var(--txt-body);
+            background: transparent;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 0.76rem;
+            cursor: pointer;
+        }
+        .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+
         /* ── 로딩 스피너 ── */
         .spinner {
             border: 2px solid rgba(201,169,110,0.12);
@@ -345,9 +441,11 @@
             <div class="relative">
                 <div class="avatar-ring" style="width:148px; height:148px;">
                     <div class="avatar-inner" style="width:100%; height:100%;">
-                        <img src="https://i.ibb.co/Tx52NF6Q/image.png"
-                             alt="원치수"
-                             style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                        <a class="profile-link" href="https://litt.ly/chichiboo" target="_blank" rel="noopener noreferrer" aria-label="치수쌤 링크">
+                            <img src="https://i.ibb.co/Tx52NF6Q/image.png"
+                                 alt="원치수"
+                                 style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                        </a>
                     </div>
                 </div>
                 <!-- 뱃지 -->
@@ -360,7 +458,7 @@
 
             <!-- 이름 -->
             <div style="padding-top:0.8rem;">
-                <h2 id="profile-name" class="f-noto" style="font-size:1.85rem; font-weight:600; color:var(--txt-h); letter-spacing:0.04em;">원치수</h2>
+                <a class="profile-link" href="https://litt.ly/chichiboo" target="_blank" rel="noopener noreferrer"><h2 id="profile-name" class="f-noto" style="font-size:1.85rem; font-weight:600; color:var(--txt-h); letter-spacing:0.04em;">원치수</h2></a>
                 <p id="profile-role"
                    style="font-size:0.78rem; font-weight:500; letter-spacing:0.02em; color:var(--gold); opacity:0.88; margin-top:0.5rem; line-height:1.6;">
                     교육뮤지컬 전문가 / 경기도교육청 초등교사
@@ -444,7 +542,15 @@
         </div>
 
         <!-- 카테고리 필터 -->
-        <div id="category-filters" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+        <div class="gallery-filter-wrap"><div id="category-filters" style="display:flex; flex-wrap:wrap; gap:8px;"></div></div>
+    </div>
+
+    <div id="query-info" class="query-info">
+        <span id="query-label">검색:</span>
+        <span class="query-pill">
+            <span id="query-term"></span>
+            <button class="query-clear" onclick="clearQuery()">CLEAR</button>
+        </span>
     </div>
 
     <!-- 골드 룰 -->
@@ -472,7 +578,40 @@
     <div id="empty" style="display:none; text-align:center; padding:10rem 0; border-radius:18px; border:1px dashed rgba(201,169,110,0.14);">
         <p id="empty-text" style="color:var(--txt-muted); font-size:0.875rem;">해당 카테고리에 프로젝트가 아직 없습니다.</p>
     </div>
+
 </main>
+
+<div id="project-modal" class="modal-backdrop" onclick="onModalBackdropClick(event)">
+    <div class="modal-panel luxury-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:1rem;">
+            <h3 id="modal-title" class="card-title" style="margin-bottom:0;"></h3>
+            <button class="modal-close" id="modal-close" onclick="closeProjectModal()">닫기</button>
+        </div>
+        <p id="modal-meta" style="font-size:0.78rem; color:var(--txt-muted); margin-bottom:1.1rem;"></p>
+
+        <div id="modal-desc-wrap" style="margin-bottom:1rem;">
+            <span id="modal-desc-label" class="field-label"></span>
+            <p id="modal-desc" class="field-body" style="white-space:pre-line;"></p>
+        </div>
+        <div id="modal-func-wrap" style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
+            <span id="modal-func-label" class="field-label"></span>
+            <p id="modal-func" class="field-body" style="white-space:pre-line;"></p>
+        </div>
+        <div id="modal-kw-wrap" style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
+            <span id="modal-kw-label" class="field-label"></span>
+            <div id="modal-kws" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:5px;"></div>
+        </div>
+        <div id="modal-tag-wrap" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">
+            <p id="modal-tags" class="hashtag-text"></p>
+        </div>
+        <div style="padding-top:1.1rem; border-top:1px solid rgba(201,169,110,0.12);">
+            <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
+                <span class="link-label" id="modal-link-label">프로젝트 보기</span>
+                <i data-lucide="arrow-right" class="link-arrow" style="width:14px;height:14px;"></i>
+            </a>
+        </div>
+    </div>
+</div>
 
 
 <!-- ══════════════════════════════════════════════
@@ -516,6 +655,7 @@
     let allProjects = [];
     let currentCat  = '전체';
     let currentLang = 'ko';
+    let currentQuery = '';
 
     /* ── 다국어 UI 문자열 ── */
     const UI = {
@@ -541,6 +681,8 @@
             errorMsg:       '오류가 발생했습니다.',
             errorSub:       '네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.',
             footerCopy:     '© 교육뮤지컬 꿈꾸는 치수쌤',
+            queryLabel:     '자동 검색',
+            queryClear:     '지우기',
             categories: {
                 '전체':              '전체',
                 '뮤지컬':            '뮤지컬',
@@ -551,7 +693,7 @@
             },
             card: {
                 desc: '소개', funcs: '기능', kws: '키워드', tags: '해시태그', view: '프로젝트 보기',
-                untitled: '제목 없음',
+                untitled: '제목 없음', close: '닫기', details: '상세 정보',
             },
         },
         en: {
@@ -576,6 +718,8 @@
             errorMsg:       'An error occurred.',
             errorSub:       'Please check your network or Google Apps Script settings.',
             footerCopy:     '© Dreaming Educational Musical Theatre Creator',
+            queryLabel:     'Auto Search',
+            queryClear:     'Clear',
             categories: {
                 '전체':              'All',
                 '뮤지컬':            'Musical Theatre',
@@ -586,7 +730,7 @@
             },
             card: {
                 desc: 'Key Features', funcs: 'Functions', kws: 'Keywords', tags: 'Hashtags', view: 'View Project',
-                untitled: 'Untitled',
+                untitled: 'Untitled', close: 'Close', details: 'Details',
             },
         },
     };
@@ -596,6 +740,9 @@
         renderFilters();
         fetchData();
         lucide.createIcons();
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeProjectModal();
+        });
     });
 
     /* ── 언어 전환 ── */
@@ -648,9 +795,14 @@
         document.getElementById('error-message').textContent    = t.errorMsg;
         document.getElementById('error-sub').textContent        = t.errorSub;
         document.getElementById('footer-copy').textContent      = t.footerCopy;
+        document.getElementById('modal-close').textContent      = t.card.close;
+        document.getElementById('modal-link-label').textContent = t.card.view;
+        document.getElementById('query-label').textContent      = t.queryLabel;
+        document.querySelector('.query-clear').textContent      = t.queryClear;
 
         renderFilters();
         renderProjects();
+        renderQueryInfo();
     }
 
     /* ── 데이터 가져오기 ── */
@@ -711,11 +863,23 @@
         const isEn  = currentLang === 'en';
         const t     = UI[currentLang];
 
-        const filtered = currentCat === '전체'
+        const catFiltered = currentCat === '전체'
             ? allProjects
             : allProjects.filter(p => p.category === currentCat);
 
-        if (filtered.length === 0 && allProjects.length > 0) {
+        const q = currentQuery.trim().toLowerCase();
+        const filtered = !q
+            ? catFiltered
+            : catFiltered.filter(p => {
+                const isEnProject = currentLang === 'en';
+                const keywords = fmtKeywords(isEnProject ? (p.keywordsEn || p.keywords) : p.keywords).join(' ').toLowerCase();
+                const hashtags = fmtHashtags(isEnProject ? (p.hashtagsEn || p.hashtags) : p.hashtags).toLowerCase();
+                const title = (isEnProject ? (p.titleEn || p.title) : p.title).toLowerCase();
+                const desc = (isEnProject ? (p.keyFeatures || p.desc) : p.desc).toLowerCase();
+                return [keywords, hashtags, title, desc].some(v => v.includes(q));
+            });
+
+        if (filtered.length === 0 && catFiltered.length > 0) {
             grid.innerHTML = '';
             empty.style.display = 'block';
             return;
@@ -733,7 +897,7 @@
             const L        = t.card;
 
             return `
-            <div class="luxury-card rounded-2xl flex flex-col" style="padding:1.8rem;">
+            <div class="luxury-card project-card-click rounded-2xl flex flex-col" style="padding:1.8rem;" onclick="openProjectModal('${p.id}')">
 
                 <!-- 카테고리 + 연도 -->
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem;">
@@ -766,18 +930,20 @@
                 <div style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
                     <span class="field-label">${L.kws}</span>
                     <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:5px;">
-                        ${kws.map(k => `<span class="kw-tag">${k}</span>`).join('')}
+                        ${kws.map(k => `<button class="kw-tag kw-tag-button" onclick="searchByToken('${escAttr(k)}', event)">${k}</button>`).join('')}
                     </div>
                 </div>` : ''}
 
                 <!-- 해시태그 / Hashtags -->
                 ${tags ? `
-                <p class="hashtag-text" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">${tags}</p>
+                <p class="hashtag-text" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">
+                    ${fmtHashtagList(tags).map(tag => `<span class="hashtag-chip" onclick="searchByToken('${escAttr(tag)}', event)">${tag}</span>`).join('')}
+                </p>
                 ` : ''}
 
                 <!-- CTA 버튼 -->
                 <div style="margin-top:auto; padding-top:1.1rem; border-top:1px solid rgba(201,169,110,0.12);">
-                    <a href="${p.link || '#'}" target="_blank" rel="noopener noreferrer" class="project-link">
+                    <a href="${p.link || '#'}" target="_blank" rel="noopener noreferrer" class="project-link" onclick="event.stopPropagation()">
                         <span class="link-label">${L.view}</span>
                         <i data-lucide="arrow-right" class="link-arrow" style="width:14px;height:14px;"></i>
                     </a>
@@ -786,6 +952,82 @@
         }).join('');
 
         lucide.createIcons();
+    }
+
+
+
+    function openProjectModal(id) {
+        const p = allProjects.find(item => String(item.id) === String(id));
+        if (!p) return;
+
+        const isEn = currentLang === 'en';
+        const t = UI[currentLang];
+        const title = isEn ? (p.titleEn || p.title) : p.title;
+        const desc = isEn ? (p.keyFeatures || p.desc) : p.desc;
+        const funcs = isEn ? (p.functionsEn || p.functions) : p.functions;
+        const kws = fmtKeywords(isEn ? (p.keywordsEn || p.keywords) : p.keywords);
+        const tags = fmtHashtags(isEn ? (p.hashtagsEn || p.hashtags) : p.hashtags);
+        const catLabel = t.categories[p.category] || p.category;
+
+        document.getElementById('modal-title').textContent = title || t.card.untitled;
+        document.getElementById('modal-meta').textContent = [catLabel, p.year].filter(Boolean).join(' · ');
+        document.getElementById('modal-desc-label').textContent = t.card.desc;
+        document.getElementById('modal-func-label').textContent = t.card.funcs;
+        document.getElementById('modal-kw-label').textContent = t.card.kws;
+        document.getElementById('modal-link-label').textContent = t.card.view;
+
+        document.getElementById('modal-desc').textContent = desc || '-';
+        document.getElementById('modal-func').textContent = funcs || '-';
+
+        const kwWrap = document.getElementById('modal-kws');
+        kwWrap.innerHTML = kws.length ? kws.map(k => `<button class="kw-tag kw-tag-button" onclick="searchByToken('${escAttr(k)}', event)">${k}</button>`).join('') : '<span class="field-body">-</span>';
+
+        document.getElementById('modal-tags').innerHTML = tags ? fmtHashtagList(tags).map(tag => `<span class="hashtag-chip" onclick="searchByToken('${escAttr(tag)}', event)">${tag}</span>`).join('') : '-';
+        document.getElementById('modal-link').href = p.link || '#';
+
+        document.getElementById('project-modal').classList.add('show');
+        document.body.style.overflow = 'hidden';
+        lucide.createIcons();
+    }
+
+    function closeProjectModal() {
+        document.getElementById('project-modal').classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    function onModalBackdropClick(event) {
+        if (event.target.id === 'project-modal') {
+            closeProjectModal();
+        }
+    }
+
+
+
+    function searchByToken(token, event) {
+        if (event) event.stopPropagation();
+        currentQuery = String(token || '').replace(/^#/, '').trim();
+        renderQueryInfo();
+        renderProjects();
+        closeProjectModal();
+    }
+
+    function clearQuery() {
+        currentQuery = '';
+        renderQueryInfo();
+        renderProjects();
+    }
+
+    function renderQueryInfo() {
+        const wrap = document.getElementById('query-info');
+        const termEl = document.getElementById('query-term');
+        if (!wrap || !termEl) return;
+        if (!currentQuery) {
+            wrap.style.display = 'none';
+            termEl.textContent = '';
+            return;
+        }
+        wrap.style.display = 'flex';
+        termEl.textContent = currentQuery;
     }
 
     /* ── 카테고리 스타일 맵 (수업·학급운영 반영) ── */
@@ -818,6 +1060,17 @@
         if (s.includes('#')) return s;
         const parts = s.includes(',') ? s.split(',') : s.split(/\s+/);
         return parts.map(w => w.trim()).filter(Boolean).map(w => `#${w}`).join(' ');
+    }
+
+    function fmtHashtagList(raw) {
+        return String(raw || '')
+            .split(/\s+/)
+            .map(v => v.trim())
+            .filter(v => v.startsWith('#'));
+    }
+
+    function escAttr(v) {
+        return String(v || '').replace(/'/g, "&#39;").replace(/"/g, '&quot;');
     }
 </script>
 
