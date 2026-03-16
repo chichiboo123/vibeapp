@@ -167,6 +167,52 @@
             letter-spacing: 0.02em; white-space: nowrap;
         }
 
+        .kw-tag-button {
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .kw-tag-button:hover {
+            color: var(--gold-light);
+            border-color: var(--gold-dim);
+            background: var(--gold-subtle);
+        }
+
+        .hashtag-chip {
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 6px;
+            transition: color 0.22s ease;
+        }
+        .hashtag-chip:hover { color: var(--gold-light); }
+
+        .query-info {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin: 0.7rem 0 1.2rem;
+            color: var(--txt-sub);
+            font-size: 0.78rem;
+        }
+        .query-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border: 1px solid var(--gold-border);
+            border-radius: 999px;
+            background: var(--gold-subtle);
+            color: var(--gold-light);
+        }
+        .query-clear {
+            border: none;
+            background: transparent;
+            color: var(--txt-sub);
+            cursor: pointer;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+        }
+        .query-clear:hover { color: var(--gold); }
+
         /* ── 해시태그 → Pretendard ── */
         .hashtag-text {
             font-family: 'Pretendard', sans-serif;
@@ -499,6 +545,14 @@
         <div class="gallery-filter-wrap"><div id="category-filters" style="display:flex; flex-wrap:wrap; gap:8px;"></div></div>
     </div>
 
+    <div id="query-info" class="query-info">
+        <span id="query-label">검색:</span>
+        <span class="query-pill">
+            <span id="query-term"></span>
+            <button class="query-clear" onclick="clearQuery()">CLEAR</button>
+        </span>
+    </div>
+
     <!-- 골드 룰 -->
     <div class="rule-gold" style="margin-bottom:3rem;"></div>
 
@@ -601,6 +655,7 @@
     let allProjects = [];
     let currentCat  = '전체';
     let currentLang = 'ko';
+    let currentQuery = '';
 
     /* ── 다국어 UI 문자열 ── */
     const UI = {
@@ -626,6 +681,8 @@
             errorMsg:       '오류가 발생했습니다.',
             errorSub:       '네트워크 환경이나 구글 앱스 스크립트 설정을 확인해 주세요.',
             footerCopy:     '© 교육뮤지컬 꿈꾸는 치수쌤',
+            queryLabel:     '자동 검색',
+            queryClear:     '지우기',
             categories: {
                 '전체':              '전체',
                 '뮤지컬':            '뮤지컬',
@@ -661,6 +718,8 @@
             errorMsg:       'An error occurred.',
             errorSub:       'Please check your network or Google Apps Script settings.',
             footerCopy:     '© Dreaming Educational Musical Theatre Creator',
+            queryLabel:     'Auto Search',
+            queryClear:     'Clear',
             categories: {
                 '전체':              'All',
                 '뮤지컬':            'Musical Theatre',
@@ -738,9 +797,12 @@
         document.getElementById('footer-copy').textContent      = t.footerCopy;
         document.getElementById('modal-close').textContent      = t.card.close;
         document.getElementById('modal-link-label').textContent = t.card.view;
+        document.getElementById('query-label').textContent      = t.queryLabel;
+        document.querySelector('.query-clear').textContent      = t.queryClear;
 
         renderFilters();
         renderProjects();
+        renderQueryInfo();
     }
 
     /* ── 데이터 가져오기 ── */
@@ -801,11 +863,23 @@
         const isEn  = currentLang === 'en';
         const t     = UI[currentLang];
 
-        const filtered = currentCat === '전체'
+        const catFiltered = currentCat === '전체'
             ? allProjects
             : allProjects.filter(p => p.category === currentCat);
 
-        if (filtered.length === 0 && allProjects.length > 0) {
+        const q = currentQuery.trim().toLowerCase();
+        const filtered = !q
+            ? catFiltered
+            : catFiltered.filter(p => {
+                const isEnProject = currentLang === 'en';
+                const keywords = fmtKeywords(isEnProject ? (p.keywordsEn || p.keywords) : p.keywords).join(' ').toLowerCase();
+                const hashtags = fmtHashtags(isEnProject ? (p.hashtagsEn || p.hashtags) : p.hashtags).toLowerCase();
+                const title = (isEnProject ? (p.titleEn || p.title) : p.title).toLowerCase();
+                const desc = (isEnProject ? (p.keyFeatures || p.desc) : p.desc).toLowerCase();
+                return [keywords, hashtags, title, desc].some(v => v.includes(q));
+            });
+
+        if (filtered.length === 0 && catFiltered.length > 0) {
             grid.innerHTML = '';
             empty.style.display = 'block';
             return;
@@ -856,13 +930,15 @@
                 <div style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
                     <span class="field-label">${L.kws}</span>
                     <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:5px;">
-                        ${kws.map(k => `<span class="kw-tag">${k}</span>`).join('')}
+                        ${kws.map(k => `<button class="kw-tag kw-tag-button" onclick="searchByToken('${escAttr(k)}', event)">${k}</button>`).join('')}
                     </div>
                 </div>` : ''}
 
                 <!-- 해시태그 / Hashtags -->
                 ${tags ? `
-                <p class="hashtag-text" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">${tags}</p>
+                <p class="hashtag-text" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">
+                    ${fmtHashtagList(tags).map(tag => `<span class="hashtag-chip" onclick="searchByToken('${escAttr(tag)}', event)">${tag}</span>`).join('')}
+                </p>
                 ` : ''}
 
                 <!-- CTA 버튼 -->
@@ -904,9 +980,9 @@
         document.getElementById('modal-func').textContent = funcs || '-';
 
         const kwWrap = document.getElementById('modal-kws');
-        kwWrap.innerHTML = kws.length ? kws.map(k => `<span class="kw-tag">${k}</span>`).join('') : '<span class="field-body">-</span>';
+        kwWrap.innerHTML = kws.length ? kws.map(k => `<button class="kw-tag kw-tag-button" onclick="searchByToken('${escAttr(k)}', event)">${k}</button>`).join('') : '<span class="field-body">-</span>';
 
-        document.getElementById('modal-tags').textContent = tags || '-';
+        document.getElementById('modal-tags').innerHTML = tags ? fmtHashtagList(tags).map(tag => `<span class="hashtag-chip" onclick="searchByToken('${escAttr(tag)}', event)">${tag}</span>`).join('') : '-';
         document.getElementById('modal-link').href = p.link || '#';
 
         document.getElementById('project-modal').classList.add('show');
@@ -923,6 +999,35 @@
         if (event.target.id === 'project-modal') {
             closeProjectModal();
         }
+    }
+
+
+
+    function searchByToken(token, event) {
+        if (event) event.stopPropagation();
+        currentQuery = String(token || '').replace(/^#/, '').trim();
+        renderQueryInfo();
+        renderProjects();
+        closeProjectModal();
+    }
+
+    function clearQuery() {
+        currentQuery = '';
+        renderQueryInfo();
+        renderProjects();
+    }
+
+    function renderQueryInfo() {
+        const wrap = document.getElementById('query-info');
+        const termEl = document.getElementById('query-term');
+        if (!wrap || !termEl) return;
+        if (!currentQuery) {
+            wrap.style.display = 'none';
+            termEl.textContent = '';
+            return;
+        }
+        wrap.style.display = 'flex';
+        termEl.textContent = currentQuery;
     }
 
     /* ── 카테고리 스타일 맵 (수업·학급운영 반영) ── */
@@ -955,6 +1060,17 @@
         if (s.includes('#')) return s;
         const parts = s.includes(',') ? s.split(',') : s.split(/\s+/);
         return parts.map(w => w.trim()).filter(Boolean).map(w => `#${w}`).join(' ');
+    }
+
+    function fmtHashtagList(raw) {
+        return String(raw || '')
+            .split(/\s+/)
+            .map(v => v.trim())
+            .filter(v => v.startsWith('#'));
+    }
+
+    function escAttr(v) {
+        return String(v || '').replace(/'/g, "&#39;").replace(/"/g, '&quot;');
     }
 </script>
 
