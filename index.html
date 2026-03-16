@@ -182,6 +182,13 @@
             cursor: pointer;
             margin-right: 6px;
             transition: color 0.22s ease;
+            /* button reset — <button> 태그로 써도 스타일 유지 */
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            color: inherit;
+            text-align: left;
         }
         .hashtag-chip:hover { color: var(--gold-light); }
 
@@ -743,6 +750,14 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeProjectModal();
         });
+        /* ── 토큰(키워드/해시태그) 클릭 이벤트 위임 ── */
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.js-token-search');
+            if (!btn) return;
+            e.stopPropagation();   // 카드 클릭(모달 열림) 방지
+            const token = btn.dataset.token || '';
+            searchByToken(token);
+        });
     });
 
     /* ── 언어 전환 ── */
@@ -930,14 +945,14 @@
                 <div style="margin-bottom:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05);">
                     <span class="field-label">${L.kws}</span>
                     <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:5px;">
-                        ${kws.map(k => `<button class="kw-tag kw-tag-button" onclick="searchByToken('${escAttr(k)}', event)">${k}</button>`).join('')}
+                        ${kws.map(k => `<button class="kw-tag kw-tag-button js-token-search" data-token="${escAttr(k)}" aria-label="${escAttr(k)} 키워드로 검색">${k}</button>`).join('')}
                     </div>
                 </div>` : ''}
 
                 <!-- 해시태그 / Hashtags -->
                 ${tags ? `
                 <p class="hashtag-text" style="margin-bottom:1rem; padding-top:0.85rem; border-top:1px solid rgba(255,255,255,0.05);">
-                    ${fmtHashtagList(tags).map(tag => `<span class="hashtag-chip" onclick="searchByToken('${escAttr(tag)}', event)">${tag}</span>`).join('')}
+                    ${fmtHashtagList(tags).map(tag => `<button class="hashtag-chip js-token-search" data-token="${escAttr(tag)}" aria-label="${escAttr(tag)} 해시태그로 검색">${tag}</button>`).join('')}
                 </p>
                 ` : ''}
 
@@ -980,9 +995,9 @@
         document.getElementById('modal-func').textContent = funcs || '-';
 
         const kwWrap = document.getElementById('modal-kws');
-        kwWrap.innerHTML = kws.length ? kws.map(k => `<button class="kw-tag kw-tag-button" onclick="searchByToken('${escAttr(k)}', event)">${k}</button>`).join('') : '<span class="field-body">-</span>';
+        kwWrap.innerHTML = kws.length ? kws.map(k => `<button class="kw-tag kw-tag-button js-token-search" data-token="${escAttr(k)}" aria-label="${escAttr(k)} 키워드로 검색">${k}</button>`).join('') : '<span class="field-body">-</span>';
 
-        document.getElementById('modal-tags').innerHTML = tags ? fmtHashtagList(tags).map(tag => `<span class="hashtag-chip" onclick="searchByToken('${escAttr(tag)}', event)">${tag}</span>`).join('') : '-';
+        document.getElementById('modal-tags').innerHTML = tags ? fmtHashtagList(tags).map(tag => `<button class="hashtag-chip js-token-search" data-token="${escAttr(tag)}" aria-label="${escAttr(tag)} 해시태그로 검색">${tag}</button>`).join('') : '-';
         document.getElementById('modal-link').href = p.link || '#';
 
         document.getElementById('project-modal').classList.add('show');
@@ -1003,8 +1018,7 @@
 
 
 
-    function searchByToken(token, event) {
-        if (event) event.stopPropagation();
+    function searchByToken(token) {
         currentQuery = String(token || '').replace(/^#/, '').trim();
         renderQueryInfo();
         renderProjects();
