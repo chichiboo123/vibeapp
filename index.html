@@ -242,6 +242,7 @@
         .cat-humanities { background: rgba(80,170,110,0.14);  color: #90DCA8; border-color: rgba(80,170,110,0.35); }
         .cat-digital    { background: rgba(80,145,220,0.14);  color: #8EC2F8; border-color: rgba(80,145,220,0.35); }
         .cat-lesson     { background: rgba(210,155,60,0.14);  color: #F0C870; border-color: rgba(210,155,60,0.35); }
+        .cat-work       { background: rgba(120,190,180,0.14); color: #9CE6DB; border-color: rgba(120,190,180,0.35); }
         .cat-default    { background: var(--gold-subtle); color: var(--gold); border-color: var(--gold-border); }
 
         /* ── 연도 레이블 → Pretendard ── */
@@ -657,7 +658,7 @@
     const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzA0E-1Et4XYf7FUUMbytXsM7nlfgStWb7mSaS-66zhmNFfrupxbZV02I7-y8VUwR1P/exec";
 
     // 내부 키는 항상 한국어; 수업디자인 → 수업·학급운영
-    const CATEGORIES = ['전체', '뮤지컬', '인터랙티브 시각디자인', '인문·창작', '디지털·세계시민교육', '수업·학급운영'];
+    const CATEGORIES = ['전체', '뮤지컬', '인터랙티브 시각디자인', '인문·창작', '디지털·세계시민교육', '수업·학급운영', '업무'];
 
     let allProjects = [];
     let currentCat  = '전체';
@@ -697,6 +698,7 @@
                 '인문·창작':          '인문·창작',
                 '디지털·세계시민교육':  '디지털·세계시민교육',
                 '수업·학급운영':       '수업·학급운영',
+                '업무':              '업무',
             },
             card: {
                 desc: '소개', funcs: '기능', kws: '키워드', tags: '해시태그', view: '프로젝트 보기',
@@ -734,6 +736,7 @@
                 '인문·창작':          'Humanities & Creative',
                 '디지털·세계시민교육':  'Digital & Global Citizenship',
                 '수업·학급운영':       'Lesson & Classroom',
+                '업무':              'Work',
             },
             card: {
                 desc: 'Key Features', funcs: 'Functions', kws: 'Keywords', tags: 'Hashtags', view: 'View Project',
@@ -1053,6 +1056,7 @@
             '인문·창작':           { icon:'book-open',    cls:'cat-humanities' },
             '디지털·세계시민교육':  { icon:'globe-2',      cls:'cat-digital' },
             '수업·학급운영':        { icon:'layout',       cls:'cat-lesson' },
+            '업무':               { icon:'briefcase',    cls:'cat-work' },
         };
         return map[cat] || { icon:'sparkles', cls:'cat-default' };
     }
